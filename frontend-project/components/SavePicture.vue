@@ -14,7 +14,16 @@
                 hover:file:bg-violet-100"/>
                 </label>
             </div>
-            <button id="post">Post</button>
+            <div class="max-w-xl mt-20 mx-auto">
+                <div class="w-full px-3">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+                        Description </label>
+                    <textarea rows="10" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"></textarea>
+                </div>
+                    <div class="flex justify-between w-full px-3">
+                        <button id="post">Post</button>
+                    </div>
+            </div>
         </div>
         
     </div>
@@ -24,7 +33,7 @@
 
 #imgPreview{
     justify-items: center;
-    width: 350px;
+    width: 550px;
     padding: 3px;
     margin: auto;
     border: 3px solid #73AD21;
