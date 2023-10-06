@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string("detail");
             $table->boolean("status")->default(false);//สถานะรอการยืนยันจากadmin
             // $table->string("category")->nullable();//หมวดหมู่
+            $table->softDeletes();  //'deleted_at' timestamp
         });
     }
 
