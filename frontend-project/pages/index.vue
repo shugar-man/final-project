@@ -21,6 +21,9 @@
                   Comment
                 </button>
               </div>
+              <button @click="ViewPost(post.id)" class="text-blue-500 hover:text-blue-700">
+                  View Details
+              </button>
             </div>
           </div>
         </div>
@@ -32,10 +35,12 @@
         <MenuLink to="/post">Next page</MenuLink>
       </div>
     </div>
+    
   </template>
   
   <script setup lang="ts">
   import { ref } from 'vue';
+  //import PostDetailPopup from '~/components/PostDetailPopup.vue';
   //const { data: posts, pending } = await useFetch<any>("post", {})
   const posts = ref([
     {
@@ -61,6 +66,12 @@
   const commentPost = (postId: number) => {
     console.log(`Commented on post with ID ${postId}`);
   };
+
+  const ViewPost = (postId: number) => {
+    console.log(`Viewed on post with ID ${postId}`);
+  };
+
+  
   </script>
   
   <style scoped>
@@ -73,4 +84,4 @@
   .animate-text-color {
     animation: colorChange 2s infinite; 
   }
-  </style>
+</style>
