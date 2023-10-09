@@ -12,13 +12,10 @@
           <img :src="post.imageUrl" alt="Artwork" class="w-full h-48 object-cover">
           <div class="p-4">
             <div class="flex items-center justify-between">
-              <h3 class="text-lg font-semibold">{{ post.title }}</h3>
-              <button @click="deletePost(post.id)" class="text-red-500 hover:text-red-700">
-                Delete
-              </button>
+              <h3 class="text-lg font-semibold">{{ post.title }} - Reported: {{ post.reportedCount }}</h3>
             </div>
             <p class="text-white">
-              {{ post.artist }} - Reported: {{ post.reportedCount }}
+              {{ post.artist }}
             </p>
             <div class="flex items-center justify-between mt-4">
               <button @click="likePost(post.id)" class="text-blue-500 hover:text-blue-700">

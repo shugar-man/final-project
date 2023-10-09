@@ -11,8 +11,6 @@
           <div v-for="post in posts" :key="post.id" class="post-container border border-gray-200 rounded-md overflow-hidden bg-gray-900 text-white">
             <img :src="post.imageUrl" alt="Artwork" class="w-full h-48 object-cover">
             <div class="p-4">
-              <h3 class="text-lg font-semibold">{{ post.title }}</h3>
-              <p class="text-white">{{ post.artist }}</p>
               <div class="flex items-center justify-between mt-4">
                 <button @click="likePost(post.id)" class="text-blue-500 hover:text-blue-700">
                   Like
