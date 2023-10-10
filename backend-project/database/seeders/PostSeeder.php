@@ -15,10 +15,10 @@ class PostSeeder extends Seeder
     public function run(): void
     {
         //
+        $user = User::find(1);
         $post = new Post();
         $post->name = "myArt";
         $post->detail = "myFirstWork";
-        $user = User::find(1);
         $user->posts()->save($post);
 
         $post2 = new Post();

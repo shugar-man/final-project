@@ -41,7 +41,7 @@ async function onSubmit() {
     if (user.value !== null) {
       const { name, email } = user.value
       auth.setUser(name, email)
-      await navigateTo('/posts')
+      await navigateTo('/')
     }
   }
 }

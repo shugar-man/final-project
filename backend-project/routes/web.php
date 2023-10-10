@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -21,7 +22,7 @@ Route::get('/', function () {
 });
 
 Route::resource('posts',App\Http\Controllers\PostController::class);
-Route::resource('photos', PhotoController::class);
+Route::resource('/', PostController::class);
 
 
 

@@ -1,24 +1,33 @@
 <template>
-    <!-- <img class="image" src="~/assets/img/cat.jpg" alt=""> -->
-    <!-- <img src="/favicon.ico" alt=""> -->
-    <div style="background-image: url('/images/users/download.png'); width: 100%; height: 400px; background-size: cover;">
-      <h1 class="text-blue-600">wwww</h1>
-      <div class="container bg-red-500 mx-auto" >
-      fadsf</div>
-      <div class="container bg-red-500 mx-auto" >
-      fdsffff</div>
-    </div>
-    <div class="bg-yelllow-500 w-auto flex">
-      <div class="w-40 text-center">post</div>
-      <div class="w-40 text-center">gallery</div>   
-      <div class="flex-grow bg-blue-400"></div>
-      <div class="w-40 text-center">subscribe</div>
-    </div>
-    <div class="bg-red-500" style="padding-top: 10px; margin-left: 20%; margin-right: 20%;">
-      <h1 class="asd">dsss</h1>
-    </div>
+  <h2>หน้าโพสต์</h2>
+  <div>{{ auth.user.name }}</div>
 
+  <div v-if="pending">
+    Pending...
+  </div>
+  <div v-else v-for="post in posts.data" :key="post.id">
+    <div class="m-4 text-blue-600">
+
+      <nuxt-link :to="`/posts/${post.id}`">
+        {{ post.name }}
+      </nuxt-link>
+      <div class="">
+        <img :src=post.user_profile_image>
+      </div>
+      <div></div>
+      <nuxt-link :to="`/page/${post.id}`">
+        {{ post.user_name }}
+      </nuxt-link>
+    </div>
+  </div>
 </template>
-  
-  <script setup lang="ts">
-  </script>
+
+<script setup lang="ts">
+import { useAuthStore } from '~/stores/useAuthStore'
+const auth = useAuthStore()
+// const config = useRuntimeConfig()
+// const { data: users, pending } = await useMyFetch<any>("/", {})
+const { data: posts, pending } = await useMyFetch<any>("/", {})
+console.log(posts)
+
+</script>

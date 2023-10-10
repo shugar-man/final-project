@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -13,10 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('post_like_user', function (Blueprint $table) {
+        Schema::create('subscribes', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class);
-            $table->foreignIdFor(Post::class);
+            // $table->foreignIdFor(User::class);
+            // $table->foreignIdFor(User::class);
+            $table->unsignedInteger('user_id')->on('users')->onDelete('cascade');
+            $table->unsignedInteger('subscribe_id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('post_like_user_migration');
+        Schema::dropIfExists('user_subscribe_user');
     }
 };

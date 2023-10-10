@@ -2,6 +2,7 @@
     <nav class="flex">
   
       <MenuLink to="/">Home</MenuLink>
+      <MenuLink to="/">Page</MenuLink>
       <MenuLink to="/login"  v-if="!auth.isLogin">Login</MenuLink>
       <MenuLink to="/login" @click="logout" v-if="auth.isLogin">Logout</MenuLink>
     </nav>

@@ -1,5 +1,5 @@
 <template>
-  <h2>Artists</h2>
+  <h2>หน้าโพสต์</h2>
 
   <div v-if="pending">
     Pending...
