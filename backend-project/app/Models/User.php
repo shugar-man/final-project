@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -43,26 +44,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    
 
     public function posts()
     {
         return $this->hasMany(Post::class);
     }
-    // public function comments()
+    // public function likes(): BelongsToMany
     // {
-    //     return $this->hasMany(Comment::class);
+    //     return $this->belongsToMany(Post::class, "post_like_user");
     // }
-    public function likes(): BelongsToMany
-    {
-        return $this->belongsToMany(Post::class, "post_like_user");
-    }
-    public function comments(): BelongsToMany{
-        return $this->belongsToMany(Post::class,"comments")->withPivot('text');
-    }
+    // public function comments(): BelongsToMany{
+    //     return $this->belongsToMany(Post::class,"comments")->withPivot('text');
+    // }
 
-    public function subscribes(): BelongsToMany{
-        return $this->belongsToMany(User::class,"subscribe_user",'user_id', 'subscribe_id');
-    }
+    // public function subscribes(): BelongsToMany{
+    //     return $this->belongsToMany(User::class,"subscribe_user",'user_id', 'subscribe_id');
+    // }
 
 
 
@@ -72,4 +70,16 @@ class User extends Authenticatable
     public function isUser():bool{
         return $this->role === 1;
     }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+    public function getJWTCustomClaims()
+    {
+        return [
+            'provider' => 'Music Lover'
+        ];
+    }
+
 }

@@ -4,7 +4,10 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Comment;
+use App\Models\Like;
 use App\Models\Post;
+use App\Models\Subscribe;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -27,14 +30,27 @@ class DatabaseSeeder extends Seeder
         $user = User::find(1);
         $user2 = User::find(2);
         $post = Post::find(2);
-        $post->userWhoLikes()->attach($user->id);
-        $user->comments()->attach($post->id);
-        $user->subscribes()->attach($user2->id);
+        // $post->userWhoLikes()->attach($user->id);
+        // $user->comments()->attach($post->id);
+        // $user->subscribes()->attach($user2->id);
         // foreach ($users as $key => $user) {
         //     foreach ($user->comments->where('id', 1) as $comment) {
         //         $comment->pivot->value;
         //     }
         // }
+        $comment = new Comment();
+        $comment->user_id = $user->id;
+        $comment->post_id = $post->id;
+        $comment->text = "sadsafdgfdhgf";
+        $comment->save();
+        $subscribe = new Subscribe();
+        $subscribe->user_id = $user->id;
+        $subscribe->subscribe_id = $user2->id;
+        $subscribe->save();
+        $like = new Like();
+        $like->user_id = $user->id;
+        $like->post_id = $post->id;
+        $like->save();
 
 
         
