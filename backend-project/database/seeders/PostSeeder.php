@@ -16,6 +16,7 @@ class PostSeeder extends Seeder
     {
         //
         $user = User::find(1);
+        $user2 = User::find(2);
         $post = new Post();
         $post->name = "myArt";
         $post->detail = "myFirstWork";
@@ -24,7 +25,13 @@ class PostSeeder extends Seeder
         $post2 = new Post();
         $post2->name = "myArt 2";
         $post2->detail = "mySecondWork";
-        $user->posts()->save($post2);
+        $user2->posts()->save($post2);
+
+
+        $post3 = new Post();
+        $post3->name = "myArt 3";
+        $post3->detail = "my3Work";
+        $user2->posts()->save($post3);
         // $post->user_id = $user->id;
         // $post->save();
     }

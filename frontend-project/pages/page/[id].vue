@@ -21,7 +21,7 @@
       <h1 class="asd">dsss</h1>
     </div>
 
-      <div v-for="post in posts.data" :key="post.id">
+      <div v-for="post in posts" :key="post.id">
       <div class="m-4 text-blue-600">
       <nuxt-link :to="`/posts/${post.id}`">
         {{ post.name }}
@@ -29,7 +29,7 @@
       <div></div>
   </div>
     </div>
-    <div class="relative">
+    <!-- <div class="relative">
                 <a href="#">
                     <img class="w-full"
                         src="https://images.pexels.com/photos/196667/pexels-photo-196667.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=1&amp;w=500"
@@ -52,7 +52,7 @@
                         <small>March</small>
                     </div>
                 </a>
-            </div>
+            </div> -->
 
   
   
@@ -69,7 +69,12 @@ const { data: user } = await useMyFetch<any>(
   `/page/${route.params.id}`,
   {}
 )
-const { data: posts} = await useMyFetch<any>("/", {})
+// const { data: posts} = await useMyFetch<any>("/", {})
+  const { data: posts} = await useMyFetch<any>(
+  `/page/${route.params.id}/post`,
+  {}
+)
+console.log(posts)
 
 
 

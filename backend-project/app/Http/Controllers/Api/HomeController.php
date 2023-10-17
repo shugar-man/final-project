@@ -15,8 +15,11 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
         $posts = Post::get();
         return PostResource::collection($posts);
+        // return $posts;
+        
     }
 
     /**
@@ -44,7 +47,13 @@ class HomeController extends Controller
     }
     public function showPage(User $user)
     {
+        $user2 = auth()->user();
         return $user;
+    }
+    public function showPost(User $user)
+    {
+        $posts = $user->posts;
+        return $posts;
     }
 
     /**

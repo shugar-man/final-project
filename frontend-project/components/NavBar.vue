@@ -17,7 +17,7 @@
       auth.clear();
     }
     
-  }
+  }  
    
   </script>
   

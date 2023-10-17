@@ -6,7 +6,7 @@
   </div>
   <div v-else v-for="post in posts" :key="post.id">
     <div class="m-4 text-blue-600">
-      <nuxt-link :to="`/posts/${post.id}`">
+      <nuxt-link :to="`/posts/${post.user_id}`">
         {{ post.name }}
       </nuxt-link>
     </div>

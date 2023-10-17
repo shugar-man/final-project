@@ -11,10 +11,13 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
+    "@nuxt/types": "^2.17.1",
+    "@nuxt/typescript-build": "^3.0.1",
     "@nuxtjs/tailwindcss": "^6.8.0",
     "@pinia-plugin-persistedstate/nuxt": "^1.1.2",
     "nuxt": "^3.7.4",
-    "tailwindcss": "^3.3.3"
+    "tailwindcss": "^3.3.3",
+    "typescript": "^4.9.5"
   },
   "dependencies": {
     "@vueuse/nuxt": "^10.4.1",

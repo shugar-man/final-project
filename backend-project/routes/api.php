@@ -31,6 +31,8 @@ Route::apiResource('/post',PostController::class);
 Route::apiResource('/', HomeController::class);
 Route::get('/page/{user}', [HomeController::class, 'showPage']);
 // Route::resource('/',SubscribeController::class);
+Route::get('/page/{user}/post', [HomeController::class, 'showPost']);
+// Route::resource('/',SubscribeController::class);
 
 
 // Route::get('/',

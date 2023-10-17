@@ -1,10 +1,13 @@
 <template>
   <h2>หน้าโพสต์</h2>
   <div>{{ auth.user.name }}</div>
-
+  <!-- <img src="{{ url('backend-project/storage/miku.jpg') }}"> -->
+  <!-- <a href="{{ asset('/storage/miku.jpg') }} "> Link Image </a> -->
+  
   <div v-if="pending">
     Pending...
   </div>
+  
   <div v-else v-for="post in posts.data" :key="post.id">
     <div class="m-4 text-blue-600">
 
@@ -12,10 +15,15 @@
         {{ post.name }}
       </nuxt-link>
       <div class="">
+        
+        <img src="~/../backend-project/storage/app/public/miku.jpg" alt="">
         <img :src=post.user_profile_image>
       </div>
+      <div class="">
+        <img src=imageUrl(post.image_path) >
+      </div>
       <div></div>
-      <nuxt-link :to="`/page/${post.id}`">
+      <nuxt-link :to="`/page/${post.user_id}`">
         {{ post.user_name }}
       </nuxt-link>
     </div>
@@ -29,5 +37,6 @@ const auth = useAuthStore()
 // const { data: users, pending } = await useMyFetch<any>("/", {})
 const { data: posts, pending } = await useMyFetch<any>("/", {})
 console.log(posts)
+console.log(auth.user.name )
 
 </script>
