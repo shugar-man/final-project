@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="imgPreview">
-            <img id="previewImg" class="img-fluid rounded" src="~/assets/img/cat.jpg">
+            <img id="previewImg" class="img-fluid rounded " src="/images/users/picture.png">
 
             <div class="items-center justify-center w-full">
                 <label class="block">
@@ -20,7 +20,7 @@
                         Description </label>
                     <textarea rows="10" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"></textarea>
                 </div>
-                <form action="">
+                <form action="#">
                     <div class="flex justify-between w-full px-3">
                         <button id="post">Post</button>
                     </div>

@@ -8,11 +8,12 @@ export const useAuthStore = defineStore('auth', {
         name: "",
         email: "",
         profile_image: ""
-      }
+      },
+      storeImageUrl: "/api/images/"
     }
   },
   getters: {
-    isLogin: (state) => state.token !== ""
+    isLogin: (state) => state.token !== "",
   },
   actions: {
     setNewToken(token: string) {
