@@ -13,9 +13,9 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::get();
-        return view('artists.index',[
-            'posts'=>$posts
-        ] );
+        return view('post.index', [
+            'posts' => $posts
+        ]);
     }
 
     /**

@@ -1,11 +1,13 @@
 <template>
   <h2>หน้าโพสต์</h2>
   <div>{{ auth.user.name }}</div>
-
+  <div>{{ auth.user.email }}</div>
+  <div>{{ auth.user.profile_image }}</div>
+  <div>{{ `/images/users/${auth.user.profile_image}`}}</div>
   <div v-if="pending">
     Pending...
   </div>
-  <div v-else v-for="post in posts.data" :key="post.id">
+  <!-- <div v-else v-for="post in posts.data" :key="post.id">
     <div class="m-4 text-blue-600">
 
       <nuxt-link :to="`/posts/${post.id}`">
@@ -19,7 +21,7 @@
         {{ post.user_name }}
       </nuxt-link>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script setup lang="ts">
@@ -27,7 +29,7 @@ import { useAuthStore } from '~/stores/useAuthStore'
 const auth = useAuthStore()
 // const config = useRuntimeConfig()
 // const { data: users, pending } = await useMyFetch<any>("/", {})
-const { data: posts, pending } = await useMyFetch<any>("/", {})
+const { data: posts, pending } = await useMyFetch<any>("/post", {})
 console.log(posts)
 
 </script>
