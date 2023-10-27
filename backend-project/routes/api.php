@@ -28,7 +28,9 @@ Route::get('/',function() {
 
 
 Route::apiResource('/post',PostController::class);
+Route::apiResource('/register',AuthController::class);
 Route::apiResource('/', HomeController::class);
+Route::post('/auth/register', [AuthController::class, 'register']);
 Route::get('/page/{user}', [HomeController::class, 'showPage']);
 // Route::resource('/',SubscribeController::class);
 Route::get('/page/{user}/post', [HomeController::class, 'showPost']);
@@ -53,5 +55,6 @@ Route::group([
     Route::post('refresh', [AuthController::class,'refresh']);
     Route::post('me', [AuthController::class,'me']);
     Route::post('register', [AuthController::class, 'register']);
+    Route::post('/auth/register', [AuthController::class, 'register']);
 
 });

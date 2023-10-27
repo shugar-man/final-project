@@ -21,7 +21,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login','register']]);
     }
 
     public function login(Request $request) {
@@ -77,7 +77,6 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'tel' => 'nullable|digits:10', 
@@ -89,7 +88,7 @@ class AuthController extends Controller
         $user->name = $request->get('name');
         $user->email = $request->get('email');
         $user->tel = $request->get('tel');
-        $user->profile_image = $request->get('profile_image');
+        $user->profile_picture = $request->file('profile_picture');
         $user->password = bcrypt($request->get('password'));
         $user->save();
 

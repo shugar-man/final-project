@@ -1,11 +1,11 @@
 <template>
   <div class="flex h-screen bg-gray-700">
     <div class="w-full max-w-lg m-auto bg-red-900 rounded p-5 flex">
-      <div class="w-1/2 pr-4">
-        <header>
-          <img class="w-20 mx-auto mb-5" src="/image/logo.jpg" />
-        </header>
-        <form @submit.prevent="onSubmit">
+      <form @submit.prevent="onSubmit">
+        <div class="w-1/2 pr-4">
+          <header>
+            <img class="w-20 mx-auto mb-5" src="/image/logo.jpg" />
+          </header>
           <div>
             <label class="block mb-1 text-red-500" for="name">Name</label>
             <input v-model="formData.name" class="w-full p-2 mb-6 text-red-700 border-b-2 border-red-500 outline-none focus:bg-gray-300" type="text" name="name">
@@ -29,23 +29,23 @@
           <footer>
             <a class="text-red-500 hover:text-black text-sm float-right" href="#">Already have an account? Login</a>
           </footer>
-        </form>
-      </div>
-      <div class="w-1/2 pl-4">
-        <div class="mb-24"></div>
-        <div>
-          <label class="block mb-2 text-red-500" for="tel">Tel</label>
-          <input v-model="formData.tel" class="w-full p-2 mb-6 text-red-700 border-b-2 border-red-500 outline-none focus:bg-gray-300" type="tel" name="tel">
-          <p v-if="tel_error !== null" class="pb-4 text-red-600">{{ tel_error }}</p>
         </div>
-        <div>
-          <label class="block mb-2 text-red-500" for="profile_picture">Profile Picture</label>
-          <input type="file" class="w-full p-2 mb-6 text-red-700 border-b-2 border-red-500 outline-none focus:bg-gray-300" accept="image/*" name="profile_picture">
+        <div class="w-1/2 pl-4">
+          <div class="mb-24"></div>
+          <div>
+            <label class="block mb-2 text-red-500" for="tel">Tel</label>
+            <input v-model="formData.tel" class="w-full p-2 mb-6 text-red-700 border-b-2 border-red-500 outline-none focus:bg-gray-300" type="tel" name="tel">
+            <p v-if="tel_error !== null" class="pb-4 text-red-600">{{ tel_error }}</p>
+          </div>
+          <div>
+            <label class="block mb-2 text-red-500" for="profile_picture">Profile Picture</label>
+            <input type="file" class="w-full p-2 mb-6 text-red-700 border-b-2 border-red-500 outline-none focus:bg-gray-300" accept="image/*" name="profile_picture">
+          </div>
+          <div>
+            <button class="w-full bg-red-700 hover:bg-black text-white font-bold py-2 px-4 mb-6 rounded" type="submit">Submit</button>
+          </div>
         </div>
-        <div>
-          <button class="w-full bg-red-700 hover:bg-black text-white font-bold py-2 px-4 mb-6 rounded">Submit</button>
-        </div>
-      </div>
+      </form>
     </div>
   </div>
 </template>
@@ -68,16 +68,22 @@ const email_error = ref(null);
 const password_error = ref(null);
 const confirm_password_error = ref(null);
 const tel_error = ref(null);
-
+console.log('onSubmit function is running...');
 const onSubmit = async () =>{
+  console.log('Submitting the form...');
+  console.log('FormData:', formData);
   try {
-    const response = await axios.post('/api/auth/register', formData);
+    console.log('Before axios post...');
+    const response = await axios.post('/register', formData);
+    console.log('After axios post...');
     // const response = await useMyFetch<any>('auth/register', {
     //   method: 'POST',
     //   body: formData
     // });
     if (response.status === 201) {
+      
       console.log('registered');
+
     } else {
       console.log('register fail')
     }
