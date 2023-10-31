@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\HomeController;
+use App\Http\Controllers\Api\LikeController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\SubscribeController;
 use App\Http\Controllers\ApiController;
@@ -32,6 +33,7 @@ Route::apiResource('/', HomeController::class);
 Route::get('/page/{user}', [HomeController::class, 'showPage']);
 // Route::resource('/',SubscribeController::class);
 Route::get('/page/{user}/post', [HomeController::class, 'showPost']);
+Route::post('/like/post/{post}', [LikeController::class, 'like']);
 // Route::resource('/',SubscribeController::class);
 
 
@@ -52,5 +54,6 @@ Route::group([
     Route::post('logout', [AuthController::class,'logout']);
     Route::post('refresh', [AuthController::class,'refresh']);
     Route::post('me', [AuthController::class,'me']);
+    Route::post('register', [AuthController::class, 'register']);
 
 });

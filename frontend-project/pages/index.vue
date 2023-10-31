@@ -1,33 +1,43 @@
 <template>
-  <h2>หน้าโพสต์</h2>
-  <div>{{ auth.user.name }}</div>
-  <!-- <img src="{{ url('backend-project/storage/miku.jpg') }}"> -->
-  <!-- <a href="{{ asset('/storage/miku.jpg') }} "> Link Image </a> -->
-  
-  <div v-if="pending">
-    Pending...
-  </div>
-  
-  <div v-else v-for="post in posts.data" :key="post.id">
-    <div class="m-4 text-blue-600">
+  <div style="padding-inline-start: 40px;margin-block-end: 1em;margin-block-start: 1em;list-style-type: disc;background-color: #042f55; background-image: url(/images/bg.gif); background-repeat: repeat-x; display: block;">
+  <h2 class="text-white">หน้าโพสต์</h2>
+  <div class="text-white">{{ auth.user.name }}</div>
 
-      <nuxt-link :to="`/posts/${post.id}`">
-        {{ post.name }}
-      </nuxt-link>
-      <div class="">
+  
+
+  <div class="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-10">
+  <div v-for="post in posts.data" :key="post.id">
+    <div class="hover:bg-gray-900 hover:text-white transition duration-300 max-w-sm rounded overflow-hidden shadow-lg">
+      <div class="py-4 px-8">
         
-        <img src="~/../backend-project/storage/app/public/miku.jpg" alt="">
-        <img :src=post.user_profile_image>
-      </div>
-      <div class="">
-        <img src=imageUrl(post.image_path) >
-      </div>
-      <div></div>
-      <nuxt-link :to="`/page/${post.user_id}`">
+        <div class="" style="width: 1369px; contain-intrinsic-size: 1369px 282.955px; content-visibility: auto;">
+        
+        <!-- <img style="width: 168px; height: 100%; display: inline-block; float: left; position: relative; margin: 4px;" :src=imageURL(post.user_profile_image)> -->
+        <nuxt-link :to="`/page/${post.user_id}`">
         {{ post.user_name }}
-      </nuxt-link>
+          <img style="" class="rounded-full h-12 w-12 mb-4" :src=imageURL(post.user_profile_image)>
+        </nuxt-link>
+        
+        <!-- <div class="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-10"> -->
+          <nuxt-link :to="`/posts/${post.id}`">
+            {{ post.name }}
+            <img :src="imageURL(post.image_path)" >
+          </nuxt-link>
+          
+          
+        
+        <!-- </div>    -->
+        </div>
+      </div>
+
+      
     </div>
   </div>
+</div>
+</div>
+  
+  
+
 </template>
 
 <script setup lang="ts">
@@ -36,7 +46,40 @@ const auth = useAuthStore()
 // const config = useRuntimeConfig()
 // const { data: users, pending } = await useMyFetch<any>("/", {})
 const { data: posts, pending } = await useMyFetch<any>("/", {})
+
+
+
+
 console.log(posts)
 console.log(auth.user.name )
+
+function imageURL(path:string) {
+  return import.meta.env.VITE_BACKEND_IMG_URL + '/' + path
+  }
+  // body {
+  //   font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  //   color: #003;
+  //   font-size: 95%;
+  //   background-color: #042f55;
+  //   background-image: url(../images/bg.gif);
+  //   background-repeat: repeat-x;
+  //   background-attachment: fixed;
+  //   background-position: top;
+  //   line-height: normal;}
+  // .round-body {
+  //   padding: 0 10px;
+  //   background-image: url(../images/main_bg2.png);
+  //   background-repeat: repeat-y;
+  //   background-position: left top;
+//   ul {
+//     display: block;
+//     list-style-type: disc;
+//     margin-block-start: 1em;
+//     margin-block-end: 1em;
+//     margin-inline-start: 0px;
+//     margin-inline-end: 0px;
+//     padding-inline-start: 40px;
+// }
+// style="padding-inline-start: 40px;margin-block-end: 1em;margin-block-start: 1em;list-style-type: disc;background-color: #042f55; background-image: url(/images/bg.gif); background-repeat: repeat-x; display: block;"
 
 </script>

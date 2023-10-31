@@ -44,8 +44,8 @@ class PostController extends Controller
     // }
     public function store(Request $request)
     {
-        // $user = auth()->user();
-        $user= User::where('name',$request->get('username'))->first();
+        $user = auth()->user();
+        // $user= User::where('name',$request->get('username'))->first();
         $request->validate([
             'name'=>['required','min:3','max:255'],
             'image_path' => ['required']
@@ -64,9 +64,9 @@ class PostController extends Controller
         if ($request->hasFile('image_path')) {
             $file = $request->file('image_path');
             $fileName = $file->getClientOriginalName();
-            $path = 'public/files' . $fileName;
+            $path = 'public/images/' . $fileName;
             Storage::disk('local')->put($path,file_get_contents($file));
-            $post->image_path = $path;
+            $post->image_path = $fileName;
             // บันทึกไฟล์รูปภาพลงใน folder ชื่อ 'artist_images' ที่ storage/app/public
             // $path = $request->file('image_path')->store('event_images', 'public');
             // $post->image_path = $path;
@@ -78,6 +78,11 @@ class PostController extends Controller
         //     'to'=>url('api/artist' .artist->id)
         // ];
         return $post;
+    }
+    public function show(Post $post)
+    {
+        // return $post;
+        return new PostResource($post);
     }
     
 }
