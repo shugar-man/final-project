@@ -1,19 +1,29 @@
 <template>
-  <div class="max-w-xl py-6 px-8 h-80 mt-20 bg-white rounded shadow-xl">
-    <form @submit.prevent="onSubmit">
-      <div class="mb-6">
-        <label for="email" class="block text-gray-800 font-bold">Email:</label>
-        <input type="email" v-model="formData.email" id="email" placeholder="email@example.com" class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600" />
-      </div>
-      <div>
-        <label for="pasword" class="block text-gray-800 font-bold">Password:</label>
-        <input type="password" v-model="formData.password" id="password" placeholder="" class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600" />
-      </div>
-      <button class="cursor-pointer py-2 px-4 block mt-6 bg-indigo-500 text-white font-bold w-full text-center rounded">Login</button>
-    </form>
+  <div class="flex h-screen bg-gray-700">
+    <div class="w-full max-w-xs m-auto bg-red-900 rounded p-5">
+      <header>
+        <img class="w-20 mx-auto mb-5" src="/image/logo.jpg" />
+      </header>
+      <form @submit.prevent="onSubmit">
+        <div>
+          <label class="block mb-2 text-red-500" for="email">Email</label>
+          <input type="email" v-model="formData.email" id="email" placeholder="email@example.com" class="w-full p-2 mb-6 text-red-700 border-b-2 border-red-500 outline-none focus:bg-gray-300 " />
+        </div>
+        <div>
+          <label class="block mb-2 text-red-500" for="password">Password</label>
+          <input type="password" v-model="formData.password" id="password" placeholder="" class="w-full p-2 mb-6 text-red-700 border-b-2 border-red-500 outline-none focus:bg-gray-300 " />
+        </div>
+        <div>
+          <button class="w-full bg-red-700 hover:bg-black text-white font-bold py-2 px-4 mb-6 rounded">Login</button>
+        </div>
+      </form>
+      <footer>
+        <a class="text-red-500 hover:text-black text-sm float-left" href="#">Forgot Password?</a>
+        <a class="text-red-500 hover:text-black text-sm float-right" href="/register">Create Account</a>
+      </footer>
+    </div>
   </div>
 </template>
-
 <script setup lang="ts">
 import { useAuthStore } from '~/stores/useAuthStore';
 const auth = useAuthStore()
@@ -37,16 +47,10 @@ async function onSubmit() {
       method: 'POST'
     })
     if (user.value !== null) {
-      const { name, email } = user.value
-      auth.setUser(name, email)
+      const { name, email , profile_image} = user.value
+      auth.setUser(name, email, profile_image)
       await navigateTo('/')
     }
   }
 }
-
-// import { useJwtStore } from '~/stores/piniaAuthStore';
-
-// const jwtStore = useJwtStore();
-// const token = 'your_jwt_token_here';
-// jwtStore.setToken(token);
 </script>

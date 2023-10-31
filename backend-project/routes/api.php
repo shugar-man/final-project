@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\LikeController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\SubscribeController;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\ImageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,7 +37,8 @@ Route::get('/page/{user}/post', [HomeController::class, 'showPost']);
 Route::post('/like/post/{post}', [LikeController::class, 'like']);
 // Route::resource('/',SubscribeController::class);
 
-
+Route::get('/images/{filename}', 'ImageController@getImage')->name('image.show');
+Route::get('/images/{filename}', [ImageController::class, 'getImage'])->name('image.show');
 // Route::get('/',
 //     [PostController::class, 'showPage']
 // )->name('post');

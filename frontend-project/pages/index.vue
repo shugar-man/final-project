@@ -82,4 +82,17 @@ function imageURL(path:string) {
 // }
 // style="padding-inline-start: 40px;margin-block-end: 1em;margin-block-start: 1em;list-style-type: disc;background-color: #042f55; background-image: url(/images/bg.gif); background-repeat: repeat-x; display: block;"
 
-</script>
+  
+  </script>
+  
+  <style scoped>
+  @keyframes colorChange {
+    0% { color: rgba(255, 255, 255, 1); }
+    50% { color: rgb(15, 243, 30); } 
+    100% { color: rgba(255, 255, 255, 1); }
+  }
+  
+  .animate-text-color {
+    animation: colorChange 2s infinite; 
+  }
+</style>
