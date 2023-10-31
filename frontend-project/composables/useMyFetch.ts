@@ -9,7 +9,6 @@ export default async function <T>(path: string, options: {}) {
   }
   if (auth.isLogin) {
     headers['Authorization'] = `Bearer ${auth.token}`
-
   }
 
   return await useFetch<T>(path, {

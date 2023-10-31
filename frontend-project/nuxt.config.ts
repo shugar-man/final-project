@@ -6,16 +6,16 @@ export default defineNuxtConfig({
     }
   },
   devtools: { enabled: true },
-  css: ['~/assets/css/main.css'],
   modules: [
-  '@vueuse/nuxt',
-  '@pinia/nuxt',
-  '@pinia-plugin-persistedstate/nuxt',
+    '@vueuse/nuxt',
+    '@pinia/nuxt',
+    '@pinia-plugin-persistedstate/nuxt',
   ],
+  css: ['~/assets/css/main.css'],
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     },
-  },
+  }
 })

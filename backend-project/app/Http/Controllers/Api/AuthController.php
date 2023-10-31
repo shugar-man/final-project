@@ -3,17 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-// use Dotenv\Validator;
-// use GuzzleHttp\Psr7\Response;
-use Illuminate\Http\Response;
+use Dotenv\Validator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator as FacadesValidator;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
 
 class AuthController extends Controller
 {
@@ -48,8 +45,14 @@ class AuthController extends Controller
     }
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
-    }
+        try {
+            $newToken = JWTAuth::refresh();
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Token refresh failed'], 401);
+        }
+
+        return $this->respondWithToken($newToken);
+    }   
     public function me()
     {
         return response()->json(JWTAuth::user());
@@ -70,28 +73,25 @@ class AuthController extends Controller
             // 'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }
-
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6'],
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'tel' => 'nullable|digits:10', 
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), Response::HTTP_UNPROCESSABLE_ENTITY); // 422
-        }
 
         $user = new User();
         $user->name = $request->get('name');
         $user->email = $request->get('email');
+        $user->tel = $request->get('tel');
+        $user->profile_picture = $request->file('profile_picture');
         $user->password = bcrypt($request->get('password'));
         $user->save();
 
-        return response()->json([
-            'message' => 'User successfully registered',
-            'user' => $user
-        ], Response::HTTP_CREATED); // 201
+        return response()->json(['message' => 'Registration successful', 'user' => $user], 201);
     }
 }
