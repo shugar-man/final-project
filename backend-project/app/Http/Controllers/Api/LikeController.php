@@ -64,10 +64,10 @@ class LikeController extends Controller
     {
         //
     }
-    public function like(Request $request, $post)
+    public function like(Request $request, $id)
     {
         // dd($post);
-        $post = Post::where('id',$post)->first();
+        $post = Post::where('id',$id)->first();
         $user = auth()->user();
         $like = new Like();
         $like->user_id = $user->id;

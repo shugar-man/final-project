@@ -3,8 +3,6 @@
   <h2 class="text-white">หน้าโพสต์</h2>
   <div class="text-white">{{ auth.user.name }}</div>
 
-  
-
   <div class="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-10">
   <div v-for="post in posts.data" :key="post.id">
     <div class="hover:bg-gray-900 hover:text-white transition duration-300 max-w-sm rounded overflow-hidden shadow-lg">
@@ -34,6 +32,8 @@
     </div>
   </div>
 </div>
+
+
 </div>
   
   
