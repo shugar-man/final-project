@@ -15,7 +15,11 @@
         <form @submit.prevent="onSubmit()">
             <button class="block bg-red-900 hover:shadow-lg font-semibold text-white px-6 py-2 ">Like</button>
             <button class="block bg-red-900 hover:shadow-lg font-semibold text-white px-6 py-2 hidden">Liked</button>
-          </form>
+        </form>
+        <form @submit.prevent="onReport()">
+            <button class="block bg-red-900 hover:shadow-lg font-semibold text-white px-6 py-2 ">Report</button>
+            <button class="block bg-red-900 hover:shadow-lg font-semibold text-white px-6 py-2 hidden">Reported</button>
+        </form>
     </div>
 
 
@@ -74,6 +78,21 @@
     body.append('name',name.value);
     const route = useRoute()
     const {data: response, error} = await useMyFetch<any>(`like/post/${route.params.id}`,{
+      method: "POST",
+      body
+    });
+    if (response.value !== null) {
+      alert('Upload')
+    } else { 
+      console.log(error)
+
+    }
+}
+
+const onReport= async () => {
+    body.append('name',name.value);
+    const route = useRoute()
+    const {data: response, error} = await useMyFetch<any>(`reportPost/post/${route.params.id}`,{
       method: "POST",
       body
     });

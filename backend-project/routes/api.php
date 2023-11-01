@@ -4,9 +4,11 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\LikeController;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\PostReportController;
 use App\Http\Controllers\Api\SubscribeController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\ImageController;
+use App\Models\PostReport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +37,7 @@ Route::get('/page/{user}', [HomeController::class, 'showPage']);
 // Route::resource('/',SubscribeController::class);
 Route::get('/page/{user}/post', [HomeController::class, 'showPost']);
 Route::post('/like/post/{post}', [LikeController::class, 'like']);
+Route::post('/reportPost/post/{post}', [PostReportController::class, 'reportPost']);
 // Route::resource('/',SubscribeController::class);
 
 Route::get('/images/{filename}', 'ImageController@getImage')->name('image.show');
