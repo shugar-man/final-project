@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\HomeController;
+use App\Http\Controllers\Api\LikeController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\SubscribeController;
 use App\Http\Controllers\ApiController;
@@ -31,6 +32,9 @@ Route::get('/',function() {
 Route::apiResource('/post',PostController::class);
 Route::apiResource('/', HomeController::class);
 Route::get('/page/{user}', [HomeController::class, 'showPage']);
+// Route::resource('/',SubscribeController::class);
+Route::get('/page/{user}/post', [HomeController::class, 'showPost']);
+Route::post('/like/post/{post}', [LikeController::class, 'like']);
 // Route::resource('/',SubscribeController::class);
 
 Route::get('/images/{filename}', [ImageController::class, 'getImage'])->name('image.show');

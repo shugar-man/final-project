@@ -18,9 +18,10 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
 
-            //$table->string("username");
+            // $table->string("username");
             $table->integer('role')->default(1)->comment('0=admin,1=user');
-            $table->string('profile_image')->default('storage/miku-3.jpg')->nullable();
+            $table->string('profile_image')->default('miku.jpg')->nullable();
+            // $table->string('profile_image')->default('storage/cat.jpg')->nullable();
             $table->string('tel')->default('-')->nullable();
             
             $table->rememberToken();

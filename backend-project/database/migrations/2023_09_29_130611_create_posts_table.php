@@ -18,7 +18,7 @@ return new class extends Migration
 
             $table->foreignIdFor(User::class);
             $table->string("name");
-            $table->string("image")->nullable();
+            $table->string("image_path")->default("02.jpg");
             $table->string("detail")->nullable();
             $table->boolean("status")->default(false);//สถานะรอการยืนยันจากadmin
             // $table->string("category")->nullable();//หมวดหมู่

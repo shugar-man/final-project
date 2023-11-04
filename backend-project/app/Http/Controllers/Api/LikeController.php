@@ -3,23 +3,18 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\PostResource;
+use App\Models\Like;
 use App\Models\Post;
-use App\Models\User;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class LikeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $user = auth()->user();
-        $posts = Post::get();
-        return PostResource::collection($posts);
-        // return $posts;
-        
+        //
     }
 
     /**
@@ -41,19 +36,9 @@ class HomeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(string $id)
     {
-        return $user;
-    }
-    public function showPage(User $user)
-    {
-        $user2 = auth()->user();
-        return $user;
-    }
-    public function showPost(User $user)
-    {
-        $posts = $user->posts;
-        return $posts;
+        //
     }
 
     /**
@@ -79,4 +64,18 @@ class HomeController extends Controller
     {
         //
     }
+    public function like(Request $request, $id)
+    {
+        // dd($post);
+        $post = Post::where('id',$id)->first();
+        $user = auth()->user();
+        $like = new Like();
+        $like->user_id = $user->id;
+        $like->post_id =$post->id;
+        $like->save();
+
+
+        
+    }
+
 }

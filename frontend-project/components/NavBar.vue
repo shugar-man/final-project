@@ -11,7 +11,7 @@
       <ul class="md:flex md:items-center">
         <MenuLink to="/">Home</MenuLink>
         <MenuLink to="/shop">Shop</MenuLink>
-        <MenuLink to="/post" v-if="auth.isLogin">Post</MenuLink>
+        <MenuLink to="/posts" v-if="auth.isLogin">Post</MenuLink>
         <DropDownProfile></DropDownProfile>
       </ul>
       
