@@ -47,10 +47,14 @@ async function onSubmit() {
       method: 'POST'
     })
     if (user.value !== null) {
-      const { name, email , profile_image} = user.value
-      auth.setUser(name, email, profile_image)
+      const {id, name, email , profile_image, tel} = user.value
+      auth.setUser(id,name, email, profile_image, tel)
+      alert(`Welcome ${name}`)
       await navigateTo('/')
     }
+
+    
+
   }
 }
 </script>

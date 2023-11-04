@@ -50,7 +50,7 @@ class PostController extends Controller
             'name'=>['required','min:3','max:255'],
             'image_path' => ['required']
         ]);
-        
+
         $name = $request->get('name');
         $exist = Post::where('name',$name)->first();
         if ($exist!== null) {
@@ -60,7 +60,7 @@ class PostController extends Controller
         $post = new Post();
         $post->name = $request->get('name');
         $post->user_id = $user->id;
-        
+
         if ($request->hasFile('image_path')) {
             $file = $request->file('image_path');
             $fileName = $file->getClientOriginalName();
@@ -84,5 +84,11 @@ class PostController extends Controller
         // return $post;
         return new PostResource($post);
     }
-    
+
+    public function countPost(Request $request){
+        $id = $request->get('id');
+        $count = Post::where('id',$id)->count();
+        return $count;
+    }
+
 }

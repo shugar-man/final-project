@@ -28,6 +28,7 @@
         </div>
       </div>
 
+      
     </div>
   </div>
 </div>
@@ -38,6 +39,7 @@
 </template>
 
 <script setup lang="ts">
+
 import { useAuthStore } from '~/stores/useAuthStore'
 const auth = useAuthStore()
 // const config = useRuntimeConfig()
