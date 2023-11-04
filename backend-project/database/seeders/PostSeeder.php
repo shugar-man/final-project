@@ -32,7 +32,7 @@ class PostSeeder extends Seeder
         $post3->name = "myArt 3";
         $post3->detail = "my3Work";
         $user2->posts()->save($post3);
-        // $post->user_id = $user->id;
-        // $post->save();
+        $post->user_id = $user->id;
+        $post->save();
     }
 }
