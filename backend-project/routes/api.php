@@ -33,8 +33,14 @@ Route::apiResource('/', HomeController::class);
 Route::get('/page/{user}', [HomeController::class, 'showPage']);
 // Route::resource('/',SubscribeController::class);
 
-Route::get('/images/{filename}', 'ImageController@getImage')->name('image.show');
 Route::get('/images/{filename}', [ImageController::class, 'getImage'])->name('image.show');
+Route::apiResource('/register',AuthController::class);
+
+Route::post('/auth/register', [AuthController::class, 'register']);
+
+Route::get('/page/{user}/post', [HomeController::class, 'showPost']);
+
+
 // Route::get('/',
 //     [PostController::class, 'showPage']
 // )->name('post');
@@ -52,5 +58,7 @@ Route::group([
     Route::post('logout', [AuthController::class,'logout']);
     Route::post('refresh', [AuthController::class,'refresh']);
     Route::post('me', [AuthController::class,'me']);
+    Route::post('register', [AuthController::class, 'register']);
+    Route::post('/auth/register', [AuthController::class, 'register']);
 
 });

@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
 
 class AuthController extends Controller
 {
@@ -18,7 +21,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login','register']]);
     }
 
     public function login(Request $request) {
@@ -28,7 +31,7 @@ class AuthController extends Controller
         ]);
         $credentials = $request->only(['email','password']);
         if (!$token = JWTAuth::attempt($credentials)) {
-            
+
             return response()->json(['error'=>'Unauthorized'],401);
         }
         return $this->respondWithToken($token);
@@ -42,7 +45,13 @@ class AuthController extends Controller
     }
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        try {
+            $newToken = JWTAuth::refresh();
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Token refresh failed'], 401);
+        }
+
+        return $this->respondWithToken($newToken);
     }
     public function me()
     {
@@ -63,5 +72,26 @@ class AuthController extends Controller
             'token_type' => 'bearer',
             // 'expires_in' => auth()->factory()->getTTL() * 60
         ]);
+    }
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'tel' => 'nullable|digits:10',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+
+        $user = new User();
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->tel = $request->get('tel');
+        $user->profile_picture = $request->file('profile_picture');
+        $user->password = bcrypt($request->get('password'));
+        $user->save();
+
+        return response()->json(['message' => 'Registration successful', 'user' => $user], 201);
     }
 }

@@ -1,75 +1,84 @@
 <template>
-    <div>
-      <div class = "bg-gray-700 text-gray-100 py-3.5 px-6 shadow md:flex justify-between item-center">
-        <h1 class="animate-text-color text-4xl">Artwork</h1>
-      </div>
-      <div v-if="pending">
-        Loading...
-      </div>
-      <div v-else>
-        <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          <div v-for="post in posts" :key="post.id" class="post-container border border-gray-200 rounded-md overflow-hidden bg-gray-900 text-white">
-            <img :src="post.imageUrl" alt="Artwork" class="w-full h-48 object-cover">
-            <div class="p-4">
-              <div class="flex items-center justify-between mt-4">
-                <button @click="likePost(post.id)" class="text-blue-500 hover:text-blue-700">
-                  Like
-                </button>
-                <button @click="commentPost(post.id)" class="text-blue-500 hover:text-blue-700">
-                  Comment
-                </button>
-              </div>
-              <button @click="ViewPost(post.id)" class="text-blue-500 hover:text-blue-700">
-                  View Details
-              </button>
-            </div>
-          </div>
+  <div style="padding-inline-start: 40px;margin-block-end: 1em;margin-block-start: 1em;list-style-type: disc;background-color: #042f55; background-image: url(/images/bg.gif); background-repeat: repeat-x; display: block;">
+  <h2 class="text-white">หน้าโพสต์</h2>
+  <div class="text-white">{{ auth.user.name }}</div>
+
+
+  <div class="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-10">
+  <div v-for="post in postser" :key="post.id">
+    <div class="hover:bg-gray-900 hover:text-white transition duration-300 max-w-sm rounded overflow-hidden shadow-lg">
+      <div class="py-4 px-8">
+        
+        <div class="" style="width: 1369px; contain-intrinsic-size: 1369px 282.955px; content-visibility: auto;">
+        
+        <!-- <img style="width: 168px; height: 100%; display: inline-block; float: left; position: relative; margin: 4px;" :src=imageURL(post.user_profile_image)> -->
+        <nuxt-link :to="`/page/${post.user_id}`">
+        {{ post.user_name }}
+          <img style="" class="rounded-full h-12 w-12 mb-4" :src=imageURL(post.user_profile_image)>
+        </nuxt-link>
+        
+        <!-- <div class="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-10"> -->
+          <nuxt-link :to="`/posts/${post.id}`">
+            {{ post.name }}
+            <img :src="imageURL(post.image_path)" >
+          </nuxt-link>
+          
+          
+        
+        <!-- </div>    -->
         </div>
       </div>
-      <div class="absolute bottom-0 right-0 mb-12 mr-4">
-        <MenuLink to="/post">Post</MenuLink>
-      </div>
-      <div class="absolute bottom-0 right-0 mb-1 mr-4">
-        <MenuLink to="/post">Next page</MenuLink>
-      </div>
-    </div>
-    
-  </template>
-  
-  <script setup lang="ts">
-  import { ref } from 'vue';
-import { useAuthStore } from '~/stores/useAuthStore';
-  //import PostDetailPopup from '~/components/PostDetailPopup.vue';
-  //const { data: posts, pending } = await useFetch<any>("post", {})
-  const auth = useAuthStore()
-  const posts = ref([
-    {
-      id: 1,
-      title: 'Artwork 1',
-      artist: 'Artist 1',
-      imageUrl: '/image/defaultProfile.jpg', 
-    },
-    {
-      id: 2,
-      title: 'Artwork 2',
-      artist: 'Artist 2',
-      imageUrl: '/image/defaultProfile.jpg', 
-    },
-    
-  ]);
-  const pending = ref(false);
-  
-  const likePost = (postId: number) => {
-    console.log(`Liked post with ID ${postId}`);
-  };
-  
-  const commentPost = (postId: number) => {
-    console.log(`Commented on post with ID ${postId}`);
-  };
 
-  const ViewPost = (postId: number) => {
-    console.log(`Viewed on post with ID ${postId}`);
-  };
+      
+    </div>
+  </div>
+</div>
+</div>
+  
+  
+
+</template>
+
+<script setup lang="ts">
+import { useAuthStore } from '~/stores/useAuthStore'
+const auth = useAuthStore()
+// const config = useRuntimeConfig()
+// const { data: users, pending } = await useMyFetch<any>("/", {})
+  const { data: postser, pending } = await useFetch<any>("/post", {method: 'GET'})
+
+
+
+
+console.log(auth.user.name )
+
+function imageURL(path:string) {
+  return import.meta.env.VITE_BACKEND_IMG_URL + '/' + path
+  }
+  // body {
+  //   font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  //   color: #003;
+  //   font-size: 95%;
+  //   background-color: #042f55;
+  //   background-image: url(../images/bg.gif);
+  //   background-repeat: repeat-x;
+  //   background-attachment: fixed;
+  //   background-position: top;
+  //   line-height: normal;}
+  // .round-body {
+  //   padding: 0 10px;
+  //   background-image: url(../images/main_bg2.png);
+  //   background-repeat: repeat-y;
+  //   background-position: left top;
+//   ul {
+//     display: block;
+//     list-style-type: disc;
+//     margin-block-start: 1em;
+//     margin-block-end: 1em;
+//     margin-inline-start: 0px;
+//     margin-inline-end: 0px;
+//     padding-inline-start: 40px;
+// }
+// style="padding-inline-start: 40px;margin-block-end: 1em;margin-block-start: 1em;list-style-type: disc;background-color: #042f55; background-image: url(/images/bg.gif); background-repeat: repeat-x; display: block;"
 
   
   </script>
