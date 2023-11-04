@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\LikeController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\PostReportController;
 use App\Http\Controllers\Api\SubscribeController;
+use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\ImageController;
 use App\Models\PostReport;
@@ -42,6 +43,9 @@ Route::post('/reportPost/post/{post}', [PostReportController::class, 'reportPost
 
 Route::get('/images/{filename}', 'ImageController@getImage')->name('image.show');
 Route::get('/images/{filename}', [ImageController::class, 'getImage'])->name('image.show');
+Route::get('/admin/reported-posts', [PostReportController::class, 'getReportedPosts']);
+Route::delete('/admin/delete-post/{post}', [AdminController::class, 'deletePost']);
+Route::post('/admin/suspend-user/{user}', [AdminController::class, 'suspendUser']);
 // Route::get('/',
 //     [PostController::class, 'showPage']
 // )->name('post');

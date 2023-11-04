@@ -90,19 +90,33 @@
 }
 
 const onReport= async () => {
-    body.append('name',name.value);
     const route = useRoute()
+    body.append('post_id', route.params.id.toString());
     const {data: response, error} = await useMyFetch<any>(`reportPost/post/${route.params.id}`,{
       method: "POST",
       body
     });
     if (response.value !== null) {
-      alert('Upload')
-    } else { 
-      console.log(error)
-
+      console.log(response.value);
+    } else {
+      console.log(error);
     }
 }
+// const onReport = async () => {
+//     body.append('post_id', post.data.id); 
+//     const route = useRoute();
+    
+//     try {
+//         const { data: response } = await axios.post(`/api/reportPost/post/${post.data.id}`, body);
+//         if (response.message === 'Post reported successfully') {
+//             alert('Post reported successfully');
+//         } else {
+//             console.log('Report failed');
+//         }
+//     } catch (error) {
+//         console.error(error);
+//     }
+// }
   
   
-  </script>
+</script>

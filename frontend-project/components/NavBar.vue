@@ -12,6 +12,7 @@
         <MenuLink to="/">Home</MenuLink>
         <MenuLink to="/shop">Shop</MenuLink>
         <MenuLink to="/posts" v-if="auth.isLogin">Post</MenuLink>
+        <MenuLink to="/admin">Admin</MenuLink>
         <DropDownProfile></DropDownProfile>
       </ul>
       

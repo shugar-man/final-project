@@ -12,6 +12,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 
+
 class AuthController extends Controller
 {
      /**
@@ -25,18 +26,42 @@ class AuthController extends Controller
     }
 
     public function login(Request $request) {
+        
         $request ->validate([
             'email' =>['required','email'],
             'password' =>['required']
         ]);
         $credentials = $request->only(['email','password']);
         if (!$token = JWTAuth::attempt($credentials)) {
-            
             return response()->json(['error'=>'Unauthorized'],401);
         }
         return $this->respondWithToken($token);
 
     }
+    // public function login(Request $request) {
+    //     $request->validate([
+    //         'email' => ['required', 'email'],
+    //         'password' => ['required'],
+    //     ]);
+    
+    //     try {
+    //         $credentials = $request->only(['email', 'password']);
+    
+    //         if (!$token = JWTAuth::attempt($credentials)) {
+    //             return response()->json(['error' => 'Unauthorized'], 401);
+    //         }
+    
+    //         $user = JWTAuth::toUser($token);
+    //         // dd($user->status);
+    //         if (!$user->status) {
+    //             return response()->json(['error' => 'User is suspended'], 403);
+    //         }
+    
+    //         return $this->respondWithToken($token);
+    //     } catch (\Exception $e) {
+    //         return response()->json(['error' => 'Internal Server Error'], 500);
+    //     }
+    // }
     public function logout()
     {
         auth()->logout();
@@ -57,6 +82,20 @@ class AuthController extends Controller
     {
         return response()->json(JWTAuth::user());
     }
+    // public function me()
+    // {
+    //     $user = JWTAuth::user();
+    
+    //     if (!$user) {
+    //         return response()->json(['error' => 'User not found'], 404);
+    //     }
+    
+    //     if ($user->status) {
+    //         return response()->json($user);
+    //     } else {
+    //         return response()->json(['error' => 'User is suspended'], 403);
+    //     }
+    // }
 
      /**
      * Get the token array structure.

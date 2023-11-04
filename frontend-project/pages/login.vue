@@ -24,6 +24,44 @@
     </div>
   </div>
 </template>
+<!-- <script setup lang="ts">
+import { useAuthStore } from '~/stores/useAuthStore';
+const auth = useAuthStore()
+
+const formData = reactive({
+  'email': '',
+  'password': '',
+})
+
+async function onSubmit() {
+  const { data: response, error } = await useMyFetch<any>('auth/login', {
+    method: 'POST',
+    body: formData
+  });
+  if (response.value !== null) {
+    const { access_token, token_type } = response.value;
+    auth.setNewToken(access_token);
+    console.log(access_token);
+
+    const { data: user, error } = await useMyFetch<any>('auth/me', {
+      method: 'POST'
+    });
+
+    if (user.value !== null) {
+      if (user.value.status === true) {
+        const { name, email, profile_image } = user.value;
+        auth.setUser(name, email, profile_image);
+        await navigateTo('/');
+      } else {
+
+        console.log('User is suspended and cannot log in.');
+ 
+      }
+    }
+  }
+}
+</script> -->
+
 <script setup lang="ts">
 import { useAuthStore } from '~/stores/useAuthStore';
 const auth = useAuthStore()

@@ -51,6 +51,10 @@
         <button class="w-1/2 block mx-auto rounded-full bg-gray-900 hover:shadow-lg font-semibold text-white px-6 py-2" >Follow</button>
         <button class="w-1/2 block mx-auto rounded-full bg-gray-900 hover:shadow-lg font-semibold text-white px-6 py-2 hidden">Followed</button>
     </div>
+    <button @click="suspendUser" class="bg-red-500 text-white rounded px-4 py-2 hover:bg-red-700">
+        Suspend
+    </button>
+    
 </div>
   
        
@@ -126,7 +130,25 @@ function imageURL(path:string) {
 console.log(posts)
 console.log(user)
 
+async function suspendUser() {
+  try {
+    console.log('User ID to suspend:', user.value.id);
+    const response = await useMyFetch<any>(`/admin/suspend-user/${user.value.id}`, {
+      method: 'POST',
+    });
 
+    if (parseInt(response.status.value) === 200) {
+
+      console.log('User suspended successfully');
+    } else {
+
+      console.error('Failed to suspend the user');
+    }
+  } catch (error) {
+
+    console.error('Network or request error:', error);
+  }
+}
 
 
 
