@@ -41,6 +41,7 @@ Route::get('/page/{user}', [HomeController::class, 'showPage']);
 // Route::resource('/',SubscribeController::class);
 Route::get('/page/{user}/post', [HomeController::class, 'showPost']);
 Route::post('/like/post/{post}', [LikeController::class, 'like']);
+Route::post('/likeTotal',[LikeController::class,'getLikeTotal']);
 Route::post('/reportPost/post/{post}', [PostReportController::class, 'reportPost']);
 Route::post('/comments', [CommentController::class, 'comments']);
 Route::post('/comments/post/{post}', [CommentController::class, 'showComments']);

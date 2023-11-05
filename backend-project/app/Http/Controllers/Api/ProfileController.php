@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -51,9 +52,27 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request)
     {
-        return "update_profile_controller";
+        $id = $request->get('id');
+        $user = User::find($id)->first();
+        $request->validate([
+            'name'=>['required','min:3','max:255'],
+        ]);
+        $fileName = null;
+        if ($request->hasFile('image_path')) {
+            $file = $request->file('image_path');
+            $fileName = $file->getClientOriginalName();
+            $path = 'public/images/' . $fileName;
+            Storage::disk('local')->put($path,file_get_contents($file));
+            $user->profile_image = $fileName;
+        }
+        $new_name = $request->get('new_name');
+        // $user->name = $new_name;
+        $user->save();
+        if($fileName !== null){
+            return $fileName;
+        }
     }
 
     /**

@@ -1,52 +1,50 @@
 <template>
-
+  <div class="post-container">
     <div v-if="post" class="text-3xl mx-4">
-    <nuxt-link :to="`/page/${post.data.user_id}`">
+      <nuxt-link :to="`/page/${post.data.user_id}`">
         {{ post.data.user_name }}
-          <img style="" class="rounded-full h-12 w-12 mb-4" :src=imageURL(post.data.user_profile_image)>
-    </nuxt-link>
-    
-      
-        <nuxt-link :to="`/posts/${post.data.id}`">
-            {{ post.data.name }}
-            <img :src="imageURL(post.data.image_path)" >
-        </nuxt-link>
-        <div class="flex ">
-          <form @submit.prevent="onSubmit()">
-            <button class="block bg-red-900 hover:bg-red-400 font-semibold text-white px-6 py-2 ">Like</button>
-            <button class="block bg-red-900 hover:bg-red-400  font-semibold text-white px-6 py-2 hidden">Liked</button>
+        <img class="rounded-full h-12 w-12 mb-4" :src="imageURL(post.data.user_profile_image)" />
+      </nuxt-link>
+
+      <nuxt-link :to="`/posts/${post.data.id}`">
+        {{ post.data.name }}
+        <img :src="imageURL(post.data.image_path)" />
+      </nuxt-link>
+
+      <div class="flex">
+        <form @submit.prevent="onSubmit()">
+          <button class="action-button like">Like</button>
+          <button class="action-button liked hidden">Liked</button>
         </form>
         <form @submit.prevent="onReport()">
-            <button class="block bg-red-900 hover:bg-red-400  font-semibold text-white px-6 py-2 ">Report</button>
-            <button class="block bg-red-900 hover:bg-red-400  font-semibold text-white px-6 py-2 hidden">Reported</button>
+          <button class="action-button report">Report</button>
+          <button class="action-button reported hidden">Reported</button>
         </form>
-        </div>
+      </div>
     </div>
 
-        <div>
-          <ul>
-            <li v-for="(comment,index) in comments.data" :key="comment.id">
-              <div>
-                {{ comment.user_name }} : <input type="text" disabled v-model="comment.text" style="width: 500px;"> 
-              </div>
-            </li>
-            
-          </ul>
-            <div> 
-              <button class="bg-red-500 text-white px-4 py-2 rounded-lg" @click="prevPage" :disabled="comments.meta.current_page === 1">Previous</button>
-              <button class="bg-red-500 text-white px-4 py-2 rounded-lg" @click="nextPage" :disabled="comments.meta.current_page === comments.meta.last_page">Next</button>
-              page: {{ comments.meta.current_page }} / {{ comments.meta.total / comments.meta.per_page }}
-            </div>
+    <div class="comment-section">
+      <ul>
+        <li v-for="(comment, index) in comments.data" :key="comment.id">
+          <div>
+            {{ comment.user_name }} : <input type="text" style="width: 500px;" disabled v-model="comment.text" />
           </div>
+        </li>
+      </ul>
+      <div class="pagination">
+        <button class="pagination-button" @click="prevPage" :disabled="comments.meta.current_page === 1">Previous</button>
+        <button class="pagination-button" @click="nextPage" :disabled="comments.meta.current_page === comments.meta.last_page">Next</button>
+        Page: {{ comments.meta.current_page }} / {{ Math.ceil(comments.meta.total / comments.meta.per_page) }}
+      </div>
+    </div>
 
-            <form @submit.prevent="onComment()">
-
-              <input type="text" id="comment_text" style="width: 500px;">
-              <button class="block bg-red-900 hover:shadow-lg font-semibold text-white px-6 py-2 ">Add Comment</button>
-            </form>
-            <span v-if="false">{{ post.data.id }}</span>
-  
-  </template>
+    <form @submit.prevent="onComment()">
+      <input type="text" id="comment_text" style="width: 500px;" />
+      <button class="action-button add-comment">Add Comment</button>
+    </form>
+    <span v-if="false">{{ post.data.id }}</span>
+  </div>
+</template>
   
   <script setup lang="ts">
 import axios from 'axios';
@@ -127,7 +125,7 @@ const fetchData = async () => {
       body
     });
     if (response.value !== null) {
-      alert('Upload')
+      alert('Liked')
     } else { 
       console.log(error)
     }
@@ -175,3 +173,92 @@ const onComment = async () => {
   </script>
 
 
+<style scoped>
+.post-container {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.text-3xl {
+  font-size: 24px;
+  margin: 0 4px;
+}
+
+.rounded-full {
+  border-radius: 50%;
+}
+
+.action-button {
+  background-color: #ff0000;
+  color: #fff;
+  font-weight: bold;
+  padding: 6px 12px;
+  margin: 4px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.action-button:hover {
+  background-color: #ff6666;
+}
+
+.liked {
+  /* Add styles for the "Liked" button when it's hidden */
+  display: none;
+}
+
+.reported {
+  /* Add styles for the "Reported" button when it's hidden */
+  display: none;
+}
+
+.comment-section {
+  margin: 20px 0;
+}
+
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination-button {
+  background-color: #ff0000;
+  color: #fff;
+  font-weight: bold;
+  padding: 6px 12px;
+  margin: 4px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.pagination-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-button:hover {
+  background-color: #ff6666;
+}
+
+.add-comment {
+  background-color: #ff0000;
+  color: #fff;
+  font-weight: bold;
+  padding: 6px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.add-comment:hover {
+  background-color: #ff6666;
+}
+</style>

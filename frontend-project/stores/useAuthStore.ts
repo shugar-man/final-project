@@ -26,6 +26,9 @@ export const useAuthStore = defineStore('auth', {
       this.user.profile_image = profile_image
       this.user.tel = tel
     },
+    setProfileImage(new_profile_image: string){
+      this.user.profile_image = new_profile_image
+    },
     clear() {
       this.token = ''
       this.user.id = ''

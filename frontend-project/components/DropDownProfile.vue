@@ -2,7 +2,7 @@
     <div class="relative px-2" @click="toggleDropdown">
       <button class="text-xl bg-green-400 text-gray-800 px-4 py-2 rounded-md flex items-center hover:bg-green-300">
         <img
-          src="/image/defaultProfile.jpg"
+        :src="imageURL(auth.user.profile_image)"
           class="w-8 h-8 rounded-full mr-2"
         />
         Profile
@@ -25,6 +25,10 @@
   import { ref } from 'vue';
   import { useAuthStore } from '~/stores/useAuthStore';
   const auth = useAuthStore() 
+  
+  function imageURL(path:string) {
+  return import.meta.env.VITE_BACKEND_IMG_URL + '/' + path
+  }
 
   async function logout() {
   const confirmLogout = confirm("Do you want to Sign Out?");

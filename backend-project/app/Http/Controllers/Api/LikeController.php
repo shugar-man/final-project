@@ -73,9 +73,13 @@ class LikeController extends Controller
         $like->user_id = $user->id;
         $like->post_id =$post->id;
         $like->save();
+    }
 
+    public function getLikeTotal(Request $request){
 
-        
+        $id = $request->get('id');
+        $likeTotal = Like::where('id',$id)->count();
+        return $likeTotal;
     }
 
 }
