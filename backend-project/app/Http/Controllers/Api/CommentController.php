@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
@@ -84,7 +85,8 @@ class CommentController extends Controller
 
     public function showComments(Request $request){
         $post_id = $request->get('id');
-        $comments = Comment::where('post_id',$post_id)->get();
-        return $comments;
+        $paginatedComments = Comment::where('post_id',$post_id)->paginate(6);
+        // return $paginatedComments;
+        return CommentResource::collection($paginatedComments);
     }
 }
