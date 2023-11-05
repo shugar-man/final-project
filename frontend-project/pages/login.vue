@@ -18,7 +18,7 @@
         </div>
       </form>
       <footer>
-        <a class="text-red-500 hover:text-black text-sm float-left" href="#">Forgot Password?</a>
+        <!-- <a class="text-red-500 hover:text-black text-sm float-left" href="#">Forgot Password?</a> -->
         <a class="text-red-500 hover:text-black text-sm float-right" href="/register">Create Account</a>
       </footer>
     </div>
@@ -85,8 +85,10 @@ async function onSubmit() {
       method: 'POST'
     })
     if (user.value !== null) {
-      const { name, email , profile_image} = user.value
-      auth.setUser(name, email, profile_image)
+      
+      const { name, email , profile_image,role} = user.value
+      console.log(user.value);
+      auth.setUser(name, email, profile_image,role)
       await navigateTo('/')
     }
   }

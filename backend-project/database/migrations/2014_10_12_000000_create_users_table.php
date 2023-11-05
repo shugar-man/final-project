@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
 
             // $table->string("username");
-            $table->integer('role')->default(1)->comment('0=admin,1=user');
+            $table->boolean('role')->default(false); // false = user
             $table->string('profile_image')->default('miku.jpg')->nullable();
             // $table->string('profile_image')->default('storage/cat.jpg')->nullable();
             $table->string('tel')->default('-')->nullable();

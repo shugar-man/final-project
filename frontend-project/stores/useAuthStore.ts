@@ -6,28 +6,32 @@ export const useAuthStore = defineStore('auth', {
       user: {
         name: "",
         email: "",
-        profile_image: ""
+        profile_image: "",
+        role: 0,
       },
       storeImageUrl: "/api/images/"
     }
   },
   getters: {
     isLogin: (state) => state.token !== "",
+    isAdmin: (state) => state.user.role === 1,
   },
   actions: {
     setNewToken(token: string) {
       this.token = token
     },
-    setUser(name: string, email: string, profile_image: string) {
+    setUser(name: string, email: string, profile_image: string,role: number) {
       this.user.name = name
       this.user.email = email
       this.user.profile_image = profile_image
+      this.user.role = role
     },
     clear() {
       this.token = ''
       this.user.name = ''
       this.user.email = ''
       this.user.profile_image = ''
+      this.user.role = 0;
     },
     
   },

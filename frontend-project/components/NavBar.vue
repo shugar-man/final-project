@@ -10,12 +10,11 @@
       </div>
       <ul class="md:flex md:items-center">
         <MenuLink to="/">Home</MenuLink>
-        <MenuLink to="/shop">Shop</MenuLink>
+        <!-- <MenuLink to="/shop">Shop</MenuLink> -->
         <MenuLink to="/posts" v-if="auth.isLogin">Post</MenuLink>
-        <MenuLink to="/admin">Admin</MenuLink>
+        <MenuLink to="/admin" v-if="auth.isAdmin">Admin</MenuLink> <!-- v-if="auth.isAdmin" -->
         <DropDownProfile></DropDownProfile>
       </ul>
-      
     </div>
 </template>
 
@@ -23,3 +22,4 @@
 import { useAuthStore } from '~/stores/useAuthStore';
 const auth = useAuthStore() 
 </script>
+
