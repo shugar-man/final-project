@@ -114,7 +114,7 @@ const onSubmit = async () => {
         //console.log('register fail');
         console.log(response.value);
         const { statusMessage, data } = error.value!;
-        await navigateTo('/');
+        //await navigateTo('/login');
         if (data && data.errors) {
           if (data.errors.name) {
             name_error.value = data.errors.name[0];
@@ -129,6 +129,7 @@ const onSubmit = async () => {
       }
     } catch (error) {
       console.error('Registration error:', error);
+      await navigateTo('/login');
     }
   }
 };
