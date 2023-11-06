@@ -2,14 +2,14 @@
     <div class="relative px-2" @click="toggleDropdown">
       <button class="text-xl bg-green-400 text-gray-800 px-4 py-2 rounded-md flex items-center hover:bg-green-300">
         <img
-          src="/image/defaultProfile.jpg"
+        :src=imageURL(auth.profile_image)
           class="w-8 h-8 rounded-full mr-2"
         />
         Profile
       </button>
       <div
         v-if="isOpen"
-        class="text-xl absolute right-0 mt-2 w-48 bg-green-400 border rounded-lg shadow-lg"
+        class="text-xl absolute right-0 mt-2 w-48 bg-green-400 border rounded-lg shadow-lg" style="z-index: 999;"
       >
         <ul>
             <li><a href="/profile" v-if="auth.isLogin" class="text-gray-800 hover:bg-green-300">Your Profile</a></li>
@@ -37,6 +37,10 @@
   }
   }
 }
+
+function imageURL(path:string) {
+  return import.meta.env.VITE_BACKEND_IMG_URL + '/' + path
+  }
 
   const isOpen = ref(false);
   

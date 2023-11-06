@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\LikeController;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\PostTopicController;
 use App\Http\Controllers\Api\SubscribeController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\ImageController;
@@ -31,11 +33,29 @@ Route::get('/',function() {
 
 Route::apiResource('/post',PostController::class);
 Route::apiResource('/', HomeController::class);
+Route::apiResource('/like', LikeController::class);
+Route::resource('/follow',SubscribeController::class);
 Route::get('/page/{user}', [HomeController::class, 'showPage']);
-// Route::resource('/',SubscribeController::class);
+
 Route::get('/page/{user}/post', [HomeController::class, 'showPost']);
+Route::get('/like/post/{post}', [LikeController::class, 'showLike']);
+Route::get('/likeStatus/post/{post}', [LikeController::class, 'likeStatus']);
 Route::post('/like/post/{post}', [LikeController::class, 'like']);
+Route::get('/unlike/post/{post}', [LikeController::class, 'unlike']);
+
+
+Route::post('/favorite/post/{post}', [FavoriteController::class, 'favorite']);
+
+
+
+Route::get('/page/subscribe/{user}',[SubscribeController::class,'showFollow']);
+Route::post('/page/subscribe/{user}',[SubscribeController::class,'subscribe']);
+Route::get('/page/unfollow/{user}',[SubscribeController::class,'unfollow']);
+Route::get('/page/sub/{user}',[SubscribeController::class,'sub']);
 // Route::resource('/',SubscribeController::class);
+
+Route::get('/topic/{post}', [PostTopicController::class, 'postTag']);
+Route::get('/topic/tag/{topic}', [PostTopicController::class, 'topic']);
 
 Route::get('/images/{filename}', 'ImageController@getImage')->name('image.show');
 Route::get('/images/{filename}', [ImageController::class, 'getImage'])->name('image.show');

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Topic;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -18,6 +19,7 @@ return new class extends Migration
 
             $table->foreignIdFor(User::class);
             $table->string("name");
+            // $table->foreignIdFor(Topic::class)->nullable();
             $table->string("image_path")->default("02.jpg");
             $table->string("detail")->nullable();
             $table->boolean("status")->default(false);//สถานะรอการยืนยันจากadmin

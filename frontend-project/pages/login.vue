@@ -27,6 +27,7 @@
 <script setup lang="ts">
 import { useAuthStore } from '~/stores/useAuthStore';
 const auth = useAuthStore()
+console.log(auth.token)
 
 const formData = reactive({
   'email': '',
@@ -47,8 +48,9 @@ async function onSubmit() {
       method: 'POST'
     })
     if (user.value !== null) {
-      const { name, email , profile_image} = user.value
-      auth.setUser(name, email, profile_image)
+      const { id,name, email , profile_image} = user.value
+      console.log(name)
+      auth.setUser(id,name, email, profile_image)
       await navigateTo('/')
     }
   }

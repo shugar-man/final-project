@@ -3,10 +3,14 @@ export const useAuthStore = defineStore('auth', {
   state: () => {
     return { 
       token: "",
+      id: '',
+      name: '',
+      email: '',
+      profile_image: '',
       user: {
-        name: "",
-        email: "",
-        profile_image: ""
+        name: '',
+        email: '',
+        profile_image: ''
       },
       storeImageUrl: "/api/images/"
     }
@@ -18,16 +22,24 @@ export const useAuthStore = defineStore('auth', {
     setNewToken(token: string) {
       this.token = token
     },
-    setUser(name: string, email: string, profile_image: string) {
-      this.user.name = name
-      this.user.email = email
-      this.user.profile_image = profile_image
+    setUser(id: string,name: string, email: string, profile_image: string) {
+      this.id = id
+      this.name = name;
+      this.email = email;
+      this.profile_image = profile_image;
+      // this.user.name = name;
+      // this.user.email = email;
+      // this.user.profile_image = profile_image;
     },
     clear() {
       this.token = ''
-      this.user.name = ''
-      this.user.email = ''
-      this.user.profile_image = ''
+      this.id = ''
+      this.name = ''
+      this.email = ''
+      this.profile_image = ''
+      // this.user.name = ''
+      // this.user.email = ''
+      // this.user.profile_image = ''
     },
     
   },

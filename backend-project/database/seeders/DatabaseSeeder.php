@@ -7,7 +7,9 @@ namespace Database\Seeders;
 use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Post;
+use App\Models\PostTopic;
 use App\Models\Subscribe;
+use App\Models\Topic;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -47,10 +49,30 @@ class DatabaseSeeder extends Seeder
         $subscribe->user_id = $user->id;
         $subscribe->subscribe_id = $user2->id;
         $subscribe->save();
+
+        $subscribe = new Subscribe();
+        $subscribe->user_id = $user->id;
+        $subscribe->subscribe_id = 3;
+        $subscribe->save();
+
+        $subscribe = new Subscribe();
+        $subscribe->user_id = $user->id;
+        $subscribe->subscribe_id = 4;
+        $subscribe->save();
+
         $like = new Like();
         $like->user_id = $user->id;
         $like->post_id = $post->id;
         $like->save();
+
+        $topic = new Topic();
+        $topic->topic = "ghost";
+        $topic->save();
+
+        $postTopic = new PostTopic();
+        $postTopic->post_id = $post->id;
+        $postTopic->topic_id = $topic->id;
+        $postTopic->save();
 
 
         

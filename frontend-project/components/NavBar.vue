@@ -8,11 +8,24 @@
           <Logo></Logo>
         </span>
       </div>
+      <div class="flex">
+        <input v-model="topic" type="text" class="text-black" aria-invalid="false" placeholder="Search Tag" autocomplete="off" aria-label="Search"
+       style="writing-mode: horizontal-tb !important;padding-block: 1px; padding-inline: 2px;">
+       <form @submit.prevent="onSubmit()">
+        <button type="submit" class ="w-full rounded-full bg-red-900 hover:shadow-lg font-semibold text-white px-6 py-2">
+          searh
+        </button>
+      </form>
+
+      </div>
+  
+       
       <ul class="md:flex md:items-center">
         <MenuLink to="/">Home</MenuLink>
-        <MenuLink to="/shop">Shop</MenuLink>
-        <MenuLink to="/posts" v-if="auth.isLogin">Post</MenuLink>
+        <!-- <MenuLink to="/shop">Shop</MenuLink> -->
+        <MenuLink to="/posts/create" v-if="auth.isLogin">Post</MenuLink>
         <DropDownProfile></DropDownProfile>
+        
       </ul>
       
     </div>
@@ -21,4 +34,16 @@
 <script setup lang="ts">
 import { useAuthStore } from '~/stores/useAuthStore';
 const auth = useAuthStore() 
+const topic = ref('');
+
+const onSubmit= async () => {
+    const route = useRoute()
+    
+    // const {data: response,error} = await useMyFetch<any>(`/topic/tag/{topic}${route.params.id}`,{
+    
+    // const response = await axios.post(`/like/post/${route.params.id}`, body);
+
+      await navigateTo(`/tag/${topic.value}`)
+    
+}
 </script>

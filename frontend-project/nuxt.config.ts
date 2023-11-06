@@ -7,9 +7,10 @@ export default defineNuxtConfig({
   },
   devtools: { enabled: true },
   modules: [
-    '@vueuse/nuxt',
+    
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
+    '@vueuse/nuxt',
   ],
   css: ['~/assets/css/main.css'],
   postcss: {

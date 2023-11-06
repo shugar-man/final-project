@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Topic extends Model
 {
     use HasFactory;
-    public function posts(): BelongsToMany{
-        return $this->belongsToMany(Post::class,"post_topic")->withPivot('text');
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
     }
 }
