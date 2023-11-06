@@ -32,18 +32,11 @@ class DatabaseSeeder extends Seeder
         $user = User::find(1);
         $user2 = User::find(2);
         $post = Post::find(2);
-        $post->userWhoLikes()->attach($user->id);
-        $user->comments()->attach($post->id);
-        $user->subscribes()->attach($user2->id);
-        foreach ($users as $key => $user) {
-            foreach ($user->comments->where('id', 1) as $comment) {
-                $comment->pivot->value;
-            }
-        }
+
         $comment = new Comment();
         $comment->user_id = $user->id;
         $comment->post_id = $post->id;
-        $comment->text = "sadsafdgfdhgf";
+        $comment->text = "very good";
         $comment->save();
         $subscribe = new Subscribe();
         $subscribe->user_id = $user->id;
@@ -75,8 +68,8 @@ class DatabaseSeeder extends Seeder
         $postTopic->save();
 
 
-        
-        
+
+
 
     }
 }

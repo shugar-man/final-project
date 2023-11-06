@@ -85,7 +85,7 @@ class CommentController extends Controller
 
     public function showComments(Request $request){
         $post_id = $request->get('id');
-        $paginatedComments = Comment::where('post_id',$post_id)->paginate(6);
+        $paginatedComments = Comment::where('post_id',$post_id)->paginate(3);
         // return $paginatedComments;
         return CommentResource::collection($paginatedComments);
     }

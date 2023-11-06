@@ -58,6 +58,7 @@ class ProfileController extends Controller
         $user = User::find($id)->first();
         $request->validate([
             'name'=>['required','min:3','max:255'],
+            'tel'=>['integer','nullable']
         ]);
         $fileName = null;
         if ($request->hasFile('image_path')) {

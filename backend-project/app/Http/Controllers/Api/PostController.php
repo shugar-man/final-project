@@ -55,7 +55,7 @@ class PostController extends Controller
         ]);
 
         $topics = $request->input('topic');
-         
+
         $name = $request->get('name');
         $exist = Post::where('name',$name)->first();
         if ($exist!== null) {
@@ -73,7 +73,7 @@ class PostController extends Controller
             $post->image_path = $fileName;
         }
         $post->save();
-        
+
 
 
         if (!empty($topics)) {
@@ -85,8 +85,8 @@ class PostController extends Controller
                     $postTopic->topic_id = $tag->id;
                     $postTopic->post_id = $post->id;
                     $postTopic->save();
-    
-    
+
+
                 }
                 else {
                     $postTopic = new PostTopic();
@@ -96,14 +96,14 @@ class PostController extends Controller
                     $postTopic->topic_id = $tag->id;
                     $postTopic->post_id = $post->id;
                     $postTopic->save();
-                    
+
                 }
-                
+
             }
         }
-        
-        
-        
+
+
+
 
 
         return $post;
@@ -114,13 +114,13 @@ class PostController extends Controller
         return new PostResource($post);
     }
     public function showtag($post) {
-        
+
     }
-    
+
 
     public function countPost(Request $request){
         $id = $request->get('id');
-        $count = Post::where('id',$id)->count();
+        $count = Post::where('user_id',$id)->get()->count();
         return $count;
     }
 

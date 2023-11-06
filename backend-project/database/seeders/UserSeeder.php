@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        
+
         $user = new User();
         $user->name = "shushu";
         $user->email = "user01@example.com";
@@ -60,10 +60,10 @@ class UserSeeder extends Seeder
 
         $user6 = new User();
         $user6->name = "markthegreat";
-        $user6->email = "user04@example.com";
+        $user6->email = "user05@example.com";
         $user6->profile_image = "EnWX0zZW4AA7MzC.jpg";
         $user6->password = Hash::make("password");
         $user6->save();
-        
+
     }
 }

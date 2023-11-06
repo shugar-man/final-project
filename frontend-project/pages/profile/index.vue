@@ -38,6 +38,10 @@ console.log(auth.user.profile_image);
     body : idUser
   })
   const art_total = response.value;
+  console.log(art_total);
+  console.log(idUser.value.id);
+  
+  
   
   
   </script>

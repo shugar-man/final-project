@@ -13,7 +13,6 @@
       >
         <ul>
             <li><a href="/profile" v-if="auth.isLogin" class="text-gray-800 hover:bg-green-300">Your Profile</a></li>
-            <li><a href="#" v-if="auth.isLogin" class="text-gray-800 hover:bg-green-300">Settings</a></li>
             <li><a href="/login" v-if="!auth.isLogin" class="text-gray-800 hover:bg-green-300">Sign In</a></li>
             <li><a href="/" @click="logout" v-if="auth.isLogin" class="text-gray-800 hover:bg-green-300">Sign Out</a></li>
         </ul>

@@ -193,6 +193,7 @@ const addInput = async () => {
       console.log(error)
       const { statusMessage, data } = error.value!
       errorMessage.value = data.message
+      alert(errorMessage)
       console.log(errorMessage);
     }
 

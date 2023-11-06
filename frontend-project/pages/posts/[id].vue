@@ -53,22 +53,20 @@
             <button class="block bg-red-900 hover:shadow-lg font-semibold text-white px-6 py-2 ">Report</button>
             <button class="block bg-red-900 hover:shadow-lg font-semibold text-white px-6 py-2 hidden">Reported</button>
         </form>
-    </div>
-    <div class="comment-section">
-      <ul>
-        <li v-for="(comment) in comments.data" :key="comment.id">
-          <div>
-            <img :src="imageURL(comment.profile_image)" class="rounded-full h-12 w-12 mb-4">{{ comment.user_name }} : 
+        <li class="bg-gray-200" v-for="(comment) in comments.data" :key="comment.id">
+          <div class="comment-container">
+            <img :src="imageURL(comment.profile_image)" class="rounded-full h-12 w-12 mb-4" style=""><div class="comment-details">{{ comment.user_name }} :</div>
             <textarea readonly v-model="comment.text"></textarea>
           </div>
         </li>
-      </ul>
+    </div>
+    
+      
       <div class="pagination">
         <button class="pagination-button" @click="prevPage" :disabled="comments.meta.current_page === 1">Previous</button>
         <button class="pagination-button" @click="nextPage" :disabled="comments.meta.current_page === comments.meta.last_page">Next</button>
         Page: {{ comments.meta.current_page }} / {{ Math.ceil(comments.meta.total / comments.meta.per_page) === 0 ? 1 :  Math.ceil(comments.meta.total / comments.meta.per_page)}}
       </div>
-    </div>
 
     <form @submit.prevent="onComment()">
       <textarea  type="text" id="comment_text" cols="30" rows="10"></textarea>
@@ -270,6 +268,7 @@ const onComment = async () => {
   border: none;
   cursor: pointer;
   border-radius: 4px;
+  position: absolute;
   transition: background-color 0.3s;
 }
 
@@ -358,14 +357,14 @@ ul {
 
   /* Style for the input field */
   input[type="text"] {
-    width: 500px;
+    width: 400px;
     border: 1px solid #ccc;
     padding: 5px;
     border-radius: 5px;
     overflow: auto;
   }
   textarea {
-    width: 500px;
+    width: 400px;
     height: 100px; /* You can adjust the height as needed */
     border: 1px solid #ccc;
     padding: 5px;
@@ -373,4 +372,15 @@ ul {
     resize: none;
     overflow: auto; /* Add scrollbar when content overflows */
   }
+
+  .comment-container {
+  display: flex;
+  align-items: center; /* Vertically center the items */
+}
+
+.comment-details {
+  margin-right: 10px; /* Adjust the margin as needed */
+}
+
+
 </style>
