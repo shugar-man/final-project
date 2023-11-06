@@ -78,30 +78,47 @@ const onFileChange = (event: Event) => {
 };
   
 const auth = useAuthStore();
-const name_error = ref(null);
-const email_error = ref(null);
+const name_error = ref<string | null>(null);
+const email_error = ref<string | null>(null);
 const password_error = ref<string | null>(null);
 // const confirm_password_error = ref(null);
 const tel_error = ref(null);
 const router = useRouter();
+const clearEmailError = () => {
+  email_error.value = null;
+}
+
+const clearPasswordError = () => {
+  password_error.value = null;
+}
+
+const clearNameError = () => {
+  name_error.value = null;
+}
+const clearTelError = () => {
+  tel_error.value = null;
+}
 
 const onSubmit = async () => {
   console.log('FormData:', formData);
   console.log('FormData:', formData.profile_image);
+  clearEmailError();
+  clearPasswordError();
+  clearNameError();
+  clearTelError();
   if (formData.password !== formData.confirmPassword) {
     console.log('Password and Confirm Password do not match.');
     password_error.value = 'The password and confirm password do not match.';
-    return;
-  } else {
-    if(formData.password.length < 8){
-      console.log('The password field must be at least 8 characters.');
-      password_error.value = 'The password field must be at least 8 characters.';
-      return;
-    }else{
-      console.log('Password and Confirm Password match.');
-    }
 
-    
+  }  
+  if(formData.password.length < 8){
+    console.log('The password field must be at least 8 characters.');
+    password_error.value = 'The password field must be at least 8 characters.';
+
+
+  if (formData.name.length < 5){
+    name_error.value = 'The name field must be at least 5 characters.';
+  }
     try {
       const { data: response, error } = await useMyFetch<any>('auth/register', {
         method: 'POST',
