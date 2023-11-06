@@ -50,7 +50,7 @@ async function onSubmit() {
       const {id, name, email , profile_image, tel} = user.value
       auth.setUser(id,name, email, profile_image, tel)
       alert(`Welcome ${name}`)
-      await navigateTo('/')
+      await navigateTo('/profile')
     }
 
     

@@ -27,9 +27,12 @@
   const auth = useAuthStore() 
   
   function imageURL(path:string) {
+    if(path === ""){
+      return "images/users/picture.png"
+    }
+    
   return import.meta.env.VITE_BACKEND_IMG_URL + '/' + path
-  }
-
+  };
   async function logout() {
   const confirmLogout = confirm("Do you want to Sign Out?");
   if(confirmLogout){

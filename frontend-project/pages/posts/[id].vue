@@ -25,7 +25,7 @@
 
     <div class="comment-section">
       <ul>
-        <li v-for="(comment, index) in comments.data" :key="comment.id">
+        <li v-for="(comment) in comments.data" :key="comment.id">
           <div>
             {{ comment.user_name }} : <input type="text" style="width: 500px;" disabled v-model="comment.text" />
           </div>
