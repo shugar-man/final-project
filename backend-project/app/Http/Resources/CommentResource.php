@@ -22,6 +22,7 @@ class CommentResource extends JsonResource
             'post_id' => $this->post->id,
             'post_name' => $this->post->name,
             'text' => $this->text,
+            'profile_image' => $this->user->profile_image
         ];
     }
 }

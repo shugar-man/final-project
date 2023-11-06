@@ -27,7 +27,7 @@
       <ul>
         <li v-for="(comment) in comments.data" :key="comment.id">
           <div>
-            {{ comment.user_name }} : <input type="text" style="width: 500px;" disabled v-model="comment.text" />
+            <img :src="imageURL(comment.profile_image)" class="rounded-full h-12 w-12 mb-4">{{ comment.user_name }} : <input type="text" style="width: 500px;" disabled v-model="comment.text" />
           </div>
         </li>
       </ul>
