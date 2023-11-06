@@ -50,8 +50,9 @@
       </div>
       <div class="opacity-0">a</div>
       <div>
-        <label for="image_path" class="text-center w-1/2 block mx-auto rounded-full text-white">Post Image</label>
-        
+        <label for="image_path">Post Image</label>
+        <p v-if="errorMessage" class="text-red-500">{{ errorMessage }}</p>
+        <img id="previewImg" class="img-fluid rounded resized-image" src="/images/users/picture.png">
         <!-- <input v-model.trim="formData.image_path" type="file" id="image_path" name="image_path" /> -->
         <div>
     <input
@@ -60,6 +61,7 @@
       name="image_path"
       @change="handleImageUpload"
       class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 w-1/2 block mx-auto rounded-full text-white"
+      accept="image/*"
     />
     <p v-if="errorFileMessage" class="text-center w-1/4 block mx-auto rounded-full text-red-500 bg-black">{{ errorFileMessage }}</p>
   </div>
@@ -87,6 +89,21 @@
 
   </template>
   
+  <style>
+  .resized-image {
+    width: 400px;
+    height: 300px;
+    object-fit: contain;
+  }
+  .centered-block {
+    position: relative;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  
+  }
+</style>
+
   <script setup lang="ts">
   import { Body } from 'nuxt/dist/head/runtime/components';
 import { useAuthStore } from '~/stores/useAuthStore';
@@ -124,12 +141,30 @@ const addInput = async () => {
   const [_image_path] = (event.target as HTMLInputElement).files as FileList;
 
   image_path.value = _image_path;
+  
+  const fileInput = document.getElementById("image_path") as HTMLInputElement;
+  const previewImage = document.getElementById("previewImg") as HTMLImageElement;
+  const selectedFile = fileInput.files?.[0];
+
+
+  if (selectedFile) {
+  // Create a URL for the selected file and set it as the image source
+  const imageUrl = URL.createObjectURL(selectedFile);
+  previewImage.src = imageUrl;
+} else {
+  // If no file is selected, clear the image source
+  previewImage.src = "/images/users/picture.png";
+}
+  
 };
+
+
+
 // const { name ,user_name ,detail,image_path } = formData.value
 
   const onSubmit = async () => {
     try {
-      
+      if (!image_path.value) return alert("plase insert post image");
       const body = new FormData();
       if (!image_path.value) {
         errorFileMessage.value = "post require image";
@@ -152,12 +187,13 @@ const addInput = async () => {
     });
     if (response.value !== null) {  
       errorMessage.value = ""
-      await navigateTo(`/posts/${response.value.id}`)
       alert('Upload')
+      await navigateTo(`/posts/${response.value.id}`)
     } else { 
       console.log(error)
       const { statusMessage, data } = error.value!
       errorMessage.value = data.message
+      console.log(errorMessage);
     }
 
     

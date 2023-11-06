@@ -108,11 +108,15 @@ async function onSubmit() {
       method: 'POST'
     })
     if (user.value !== null) {
-      const { id,name, email , profile_image,role} = user.value
+      const { id,name, email , profile_image,role,tel} = user.value
       console.log(name)
-      auth.setUser(id,name, email, profile_image,role)
-      await navigateTo('/')
+      auth.setUser(id,name, email, profile_image,role, tel)
+      alert(`Welcome ${name}`)
+      await navigateTo('/profile')
     }
+
+    
+
   }
 }
 </script>

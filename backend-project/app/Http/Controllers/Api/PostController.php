@@ -117,4 +117,11 @@ class PostController extends Controller
         
     }
     
+
+    public function countPost(Request $request){
+        $id = $request->get('id');
+        $count = Post::where('id',$id)->count();
+        return $count;
+    }
+
 }

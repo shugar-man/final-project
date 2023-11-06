@@ -49,15 +49,30 @@
         </form>
         <div class="opacity-0">a</div>
     <div class="opacity-0">a</div>
-
-            <button class="block bg-red-900 hover:shadow-lg font-semibold text-white px-6 py-2 ">Like</button>
-            <button class="block bg-red-900 hover:shadow-lg font-semibold text-white px-6 py-2 hidden">Liked</button>
-        </form>
         <form @submit.prevent="onReport()">
             <button class="block bg-red-900 hover:shadow-lg font-semibold text-white px-6 py-2 ">Report</button>
             <button class="block bg-red-900 hover:shadow-lg font-semibold text-white px-6 py-2 hidden">Reported</button>
         </form>
     </div>
+    <div class="comment-section">
+      <ul>
+        <li v-for="(comment) in comments.data" :key="comment.id">
+          <div>
+            <img :src="imageURL(comment.profile_image)" class="rounded-full h-12 w-12 mb-4">{{ comment.user_name }} : <input type="text" style="width: 500px;" disabled v-model="comment.text" />
+          </div>
+        </li>
+      </ul>
+      <div class="pagination">
+        <button class="pagination-button" @click="prevPage" :disabled="comments.meta.current_page === 1">Previous</button>
+        <button class="pagination-button" @click="nextPage" :disabled="comments.meta.current_page === comments.meta.last_page">Next</button>
+        Page: {{ comments.meta.current_page }} / {{ Math.ceil(comments.meta.total / comments.meta.per_page) === 0 ? 1 :  Math.ceil(comments.meta.total / comments.meta.per_page)}}
+      </div>
+    </div>
+
+    <form @submit.prevent="onComment()">
+      <input type="text" id="comment_text" style="width: 500px;" />
+      <button class="action-button add-comment">Add Comment</button>
+    </form>
 
             
 
@@ -75,6 +90,7 @@
   const showbutton= false;
   console.log(auth.id)
   const pageTitle = `Post No. ${route.params.id}`
+  
   
   
   const { data: post } = await useMyFetch<any>(
@@ -150,21 +166,168 @@ const onReport= async () => {
       console.log(error);
     }
 }
-// const onReport = async () => {
-//     body.append('post_id', post.data.id); 
-//     const route = useRoute();
+
+const formData = ref({
+    text: "",
+    id: route.params.id,
+    user: auth.user.id,
+    page: 0
+  })
+
+
+  const {data: comments} = await useMyFetch<any>(`/comments/post/${route.params.id}`,{
+      method: "POST",
+      body: formData
+    });
+    if (comments.value !== null) {
+      console.log(comments.value);
+      console.log(comments.value.meta);
+    } else { 
+    }
+  
+    const prevPage = () => {
+  if (comments.value.meta.current_page > 1) {
+    formData.value.page = comments.value.meta.current_page - 1;
+    fetchData();
+  }
+};
+
+const nextPage = () => {
+  if (comments.value.meta.current_page < comments.value.meta.last_page) {
+    formData.value.page = comments.value.meta.current_page + 1;
+    fetchData();
+  }
+};
+
+const fetchData = async () => {
+  try {
+    const { data: newComments, error } = await useMyFetch<any>(`/comments/post/${$route.params.id}`, {
+      method: "POST",
+      body: formData
+    });
+
+    if (error) {
+      console.error('Error fetching data:', error);
+      return;
+    }
+
+    // Update the comments with the new data
+    comments.value = newComments;
+  } catch (e) {
+    console.error('An error occurred while fetching data:', e);
+  }
+};
+const onComment = async () => {
+    const route = useRoute()
+    const com_text = document.getElementById("comment_text") as HTMLInputElement
     
-//     try {
-//         const { data: response } = await axios.post(`/api/reportPost/post/${post.data.id}`, body);
-//         if (response.message === 'Post reported successfully') {
-//             alert('Post reported successfully');
-//         } else {
-//             console.log('Report failed');
-//         }
-//     } catch (error) {
-//         console.error(error);
-//     }
-// }
+    formData.value.text = com_text.value
+    console.log(formData.value);
+    
+    const {data: response, error} = await useMyFetch<any>("/comments",{
+      method: "POST",
+      body: formData
+    });
+    if (response.value !== null) {
+      alert('Commentted')
+      window.location.reload();
+    } else { 
+      console.log(error)
+      alert("please input comment")
+    }
+    console.log(response.value);
+  
+}
   
   
 </script>
+
+<style scoped>
+.post-container {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.text-3xl {
+  font-size: 24px;
+  margin: 0 4px;
+}
+
+.rounded-full {
+  border-radius: 50%;
+}
+
+.action-button {
+  background-color: #ff0000;
+  color: #fff;
+  font-weight: bold;
+  padding: 6px 12px;
+  margin: 4px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.action-button:hover {
+  background-color: #ff6666;
+}
+
+.liked {
+  /* Add styles for the "Liked" button when it's hidden */
+  display: none;
+}
+
+.reported {
+  /* Add styles for the "Reported" button when it's hidden */
+  display: none;
+}
+
+.comment-section {
+  margin: 20px 0;
+}
+
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination-button {
+  background-color: #ff0000;
+  color: #fff;
+  font-weight: bold;
+  padding: 6px 12px;
+  margin: 4px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.pagination-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-button:hover {
+  background-color: #ff6666;
+}
+
+.add-comment {
+  background-color: #ff0000;
+  color: #fff;
+  font-weight: bold;
+  padding: 6px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.add-comment:hover {
+  background-color: #ff6666;
+}
+</style>

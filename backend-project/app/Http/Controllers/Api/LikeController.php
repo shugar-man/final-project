@@ -141,9 +141,13 @@ class LikeController extends Controller
         
         
         return $like;
+    }
 
+    public function getLikeTotal(Request $request){
 
-        
+        $id = $request->get('id');
+        $likeTotal = Like::where('id',$id)->count();
+        return $likeTotal;
     }
 
 }

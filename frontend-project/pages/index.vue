@@ -34,6 +34,7 @@
         </div>
       </div>
 
+      
     </div>
   </div>
 </div>
@@ -46,10 +47,12 @@
 </template>
 
 <script setup lang="ts">
+
 import { useAuthStore } from '~/stores/useAuthStore'
 const auth = useAuthStore()
 // const config = useRuntimeConfig()
 // const { data: users, pending } = await useMyFetch<any>("/", {})
+ // const { data: postser, pending } = await useFetch<any>("/post", {method: 'GET'})
 const { data: posts, pending } = await useMyFetch<any>("/", {})
 
 

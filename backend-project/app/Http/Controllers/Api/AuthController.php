@@ -33,6 +33,7 @@ class AuthController extends Controller
         ]);
         $credentials = $request->only(['email','password']);
         if (!$token = JWTAuth::attempt($credentials)) {
+
             return response()->json(['error'=>'Unauthorized'],401);
         }
         return $this->respondWithToken($token);
@@ -78,7 +79,7 @@ class AuthController extends Controller
         }
 
         return $this->respondWithToken($newToken);
-    }   
+    }
     public function me()
     {
         return response()->json(JWTAuth::user());
@@ -119,7 +120,7 @@ class AuthController extends Controller
             'name' => 'required|min:5|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             // 'password' => 'required|string|min:8|confirmed',
-            'tel' => 'nullable|string|digits:10', 
+            'tel' => 'required|string|digits:10', 
             // 'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
 

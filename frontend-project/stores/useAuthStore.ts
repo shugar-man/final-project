@@ -13,8 +13,8 @@ export const useAuthStore = defineStore('auth', {
         email: "",
         profile_image: "",
         role: 0,
+        tel: ""
       },
-      storeImageUrl: "/api/images/"
     }
   },
   getters: {
@@ -25,12 +25,16 @@ export const useAuthStore = defineStore('auth', {
     setNewToken(token: string) {
       this.token = token
     },
-    setUser(id: string,name: string, email: string, profile_image: string,role: number) {
+    setUser(id: string,name: string, email: string, profile_image: string,role: number,tel: string) {
       this.user.id = id
       this.user.name = name
       this.user.email = email
       this.user.profile_image = profile_image
       this.user.role = role
+      this.user.tel = tel
+    },
+    setProfileImage(new_profile_image: string){
+      this.user.profile_image = new_profile_image
     },
     clear() {
       this.token = ''
@@ -39,8 +43,8 @@ export const useAuthStore = defineStore('auth', {
       this.user.email = ''
       this.user.profile_image = ''
       this.user.role = 0;
+      this.user.tel = ''
     },
-    
   },
   persist: true
 })
