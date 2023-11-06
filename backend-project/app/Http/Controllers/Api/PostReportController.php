@@ -20,17 +20,22 @@ class PostReportController extends Controller
                 ->first();
     
             if (!$report) {
-                PostReport::create([
-                    'user_id' => $user->id,
-                    'post_id' => $postId,
-                ]);
+                $existingReport = PostReport::where('post_id', $postId)->first();
     
-                return response()->json(['message' => 'Post reported successfully']);
+                if (!$existingReport) {
+                    PostReport::create([
+                        'user_id' => $user->id,
+                        'post_id' => $postId,
+                    ]);
+    
+                    return response()->json(['message' => 'Post reported successfully']);
+                } else {
+                    return response()->json(['message' => 'Another user has already reported this post.']);
+                }
+            } else {
+                return response()->json(['message' => 'You have already reported this post.']);
             }
-    
-            return response()->json(['message' => 'You have already reported this post.']);
         } else {
-
             return response()->json(['message' => 'Unauthorized'], 401);
         }
     }
