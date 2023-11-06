@@ -27,7 +27,8 @@
       <ul>
         <li v-for="(comment) in comments.data" :key="comment.id">
           <div>
-            <img :src="imageURL(comment.profile_image)" class="rounded-full h-12 w-12 mb-4">{{ comment.user_name }} : <input type="text" style="width: 500px;" disabled v-model="comment.text" />
+            <img :src="imageURL(comment.profile_image)" class="rounded-full h-12 w-12 mb-4">{{ comment.user_name }} : 
+            <textarea readonly v-model="comment.text"></textarea>
           </div>
         </li>
       </ul>
@@ -39,7 +40,7 @@
     </div>
 
     <form @submit.prevent="onComment()">
-      <input type="text" id="comment_text" style="width: 500px;" />
+      <textarea  type="text" id="comment_text" cols="30" rows="10"></textarea>
       <button class="action-button add-comment">Add Comment</button>
     </form>
     <span v-if="false">{{ post.data.id }}</span>
@@ -261,4 +262,46 @@ const onComment = async () => {
 .add-comment:hover {
   background-color: #ff6666;
 }
+
+ul {
+    list-style: none;
+  }
+
+  /* Style for each comment item */
+  li {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+
+  /* Style for the profile image */
+  img.rounded-full {
+    border-radius: 50%;
+    height: 5rem;
+    width: 5rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Style for the user name */
+  .user-name {
+    font-weight: bold;
+  }
+
+  /* Style for the input field */
+  input[type="text"] {
+    width: 500px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+    overflow: auto;
+  }
+  textarea {
+    width: 500px;
+    height: 100px; /* You can adjust the height as needed */
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+    resize: none;
+    overflow: auto; /* Add scrollbar when content overflows */
+  }
 </style>
