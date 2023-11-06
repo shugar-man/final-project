@@ -116,9 +116,9 @@ const onSubmit = async () => {
     password_error.value = 'The password field must be at least 8 characters.';
 
 
-  if (formData.name.length < 5){
-    name_error.value = 'The name field must be at least 5 characters.';
-  }
+  // if (formData.name.length < 5){
+  //   name_error.value = 'The name field must be at least 5 characters.';
+  // }
     try {
       const { data: response, error } = await useMyFetch<any>('auth/register', {
         method: 'POST',
