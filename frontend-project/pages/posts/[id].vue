@@ -50,6 +50,13 @@
         <div class="opacity-0">a</div>
     <div class="opacity-0">a</div>
 
+            <button class="block bg-red-900 hover:shadow-lg font-semibold text-white px-6 py-2 ">Like</button>
+            <button class="block bg-red-900 hover:shadow-lg font-semibold text-white px-6 py-2 hidden">Liked</button>
+        </form>
+        <form @submit.prevent="onReport()">
+            <button class="block bg-red-900 hover:shadow-lg font-semibold text-white px-6 py-2 ">Report</button>
+            <button class="block bg-red-900 hover:shadow-lg font-semibold text-white px-6 py-2 hidden">Reported</button>
+        </form>
     </div>
 
             
@@ -129,6 +136,35 @@ const {data: likes, error} = await useMyFetch<any>(`like/post/${route.params.id}
       // console.log(error)
 
     }
+
+const onReport= async () => {
+    const route = useRoute()
+    body.append('post_id', route.params.id.toString());
+    const {data: response, error} = await useMyFetch<any>(`reportPost/post/${route.params.id}`,{
+      method: "POST",
+      body
+    });
+    if (response.value !== null) {
+      console.log(response.value);
+    } else {
+      console.log(error);
+    }
+}
+// const onReport = async () => {
+//     body.append('post_id', post.data.id); 
+//     const route = useRoute();
+    
+//     try {
+//         const { data: response } = await axios.post(`/api/reportPost/post/${post.data.id}`, body);
+//         if (response.message === 'Post reported successfully') {
+//             alert('Post reported successfully');
+//         } else {
+//             console.log('Report failed');
+//         }
+//     } catch (error) {
+//         console.error(error);
+//     }
+// }
   
   
-  </script>
+</script>

@@ -24,10 +24,10 @@
         <MenuLink to="/">Home</MenuLink>
         <!-- <MenuLink to="/shop">Shop</MenuLink> -->
         <MenuLink to="/posts/create" v-if="auth.isLogin">Post</MenuLink>
+        <MenuLink to="/admin" v-if="auth.isAdmin">Admin</MenuLink> <!-- v-if="auth.isAdmin" -->
         <DropDownProfile></DropDownProfile>
         
       </ul>
-      
     </div>
 </template>
 
@@ -47,3 +47,4 @@ const onSubmit= async () => {
     
 }
 </script>
+
