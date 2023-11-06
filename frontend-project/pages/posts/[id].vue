@@ -34,7 +34,7 @@
       <div class="pagination">
         <button class="pagination-button" @click="prevPage" :disabled="comments.meta.current_page === 1">Previous</button>
         <button class="pagination-button" @click="nextPage" :disabled="comments.meta.current_page === comments.meta.last_page">Next</button>
-        Page: {{ comments.meta.current_page }} / {{ Math.ceil(comments.meta.total / comments.meta.per_page) }}
+        Page: {{ comments.meta.current_page }} / {{ Math.ceil(comments.meta.total / comments.meta.per_page) === 0 ? 1 :  Math.ceil(comments.meta.total / comments.meta.per_page)}}
       </div>
     </div>
 
