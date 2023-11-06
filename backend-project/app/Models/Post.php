@@ -21,7 +21,10 @@ class Post extends Model
     // public function userWhoComments(): BelongsToMany{
     //     return $this->belongsToMany(User::class,"comments")->withPivot('text');
     // }
-    public function topics(): BelongsToMany{
-        return $this->belongsToMany(Topic::class,"post_topic")->withPivot('text');
+    // public function topics(): BelongsToMany{
+    //     return $this->belongsToMany(Topic::class,"post_topic")->withPivot('text');
+    // }
+    public function topics() {
+        return $this->belongsTo(Topic::class);
     }
 }

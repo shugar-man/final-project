@@ -12,6 +12,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 
+
 class AuthController extends Controller
 {
      /**
@@ -25,6 +26,7 @@ class AuthController extends Controller
     }
 
     public function login(Request $request) {
+        
         $request ->validate([
             'email' =>['required','email'],
             'password' =>['required']
@@ -37,6 +39,31 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
 
     }
+    // public function login(Request $request) {
+    //     $request->validate([
+    //         'email' => ['required', 'email'],
+    //         'password' => ['required'],
+    //     ]);
+    
+    //     try {
+    //         $credentials = $request->only(['email', 'password']);
+    
+    //         if (!$token = JWTAuth::attempt($credentials)) {
+    //             return response()->json(['error' => 'Unauthorized'], 401);
+    //         }
+    
+    //         $user = JWTAuth::toUser($token);
+    //         dd($user->status);
+
+    //         if (!$user->status) {
+    //             return response()->json(['error' => 'User is suspended'], 403);
+    //         }else{
+    //             return $this->respondWithToken($token);
+    //         }
+    //     } catch (\Exception $e) {
+    //         return response()->json(['error' => 'Internal Server Error'], 500);
+    //     }
+    // }
     public function logout()
     {
         auth()->logout();
@@ -57,6 +84,20 @@ class AuthController extends Controller
     {
         return response()->json(JWTAuth::user());
     }
+    // public function me()
+    // {
+    //     $user = JWTAuth::user();
+    
+    //     if (!$user) {
+    //         return response()->json(['error' => 'User not found'], 404);
+    //     }
+    
+    //     if ($user->status) {
+    //         return response()->json($user);
+    //     } else {
+    //         return response()->json(['error' => 'User is suspended'], 403);
+    //     }
+    // }
 
      /**
      * Get the token array structure.
@@ -76,20 +117,23 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|min:5|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'tel' => 'nullable|digits:10',
-            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            // 'password' => 'required|string|min:8|confirmed',
+            'tel' => 'required|string|digits:10', 
+            // 'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
-
 
         $user = new User();
         $user->name = $request->get('name');
         $user->email = $request->get('email');
         $user->tel = $request->get('tel');
-        $user->profile_picture = $request->file('profile_picture');
+        $user->profile_image = $request->file('profile_image');
         $user->password = bcrypt($request->get('password'));
+        // if ($request->hasFile('profile_image')) {
+        //     $imagePath = $request->file('profile_image')->store('profile_images', 'public');
+        //     $user->profile_image = $imagePath;
+        // }
         $user->save();
 
         return response()->json(['message' => 'Registration successful', 'user' => $user], 201);

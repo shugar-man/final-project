@@ -9,7 +9,7 @@
       </button>
       <div
         v-if="isOpen"
-        class="text-xl absolute right-0 mt-2 w-48 bg-green-400 border rounded-lg shadow-lg"
+        class="text-xl absolute right-0 mt-2 w-48 bg-green-400 border rounded-lg shadow-lg" style="z-index: 999;"
       >
         <ul>
             <li><a href="/profile" v-if="auth.isLogin" class="text-gray-800 hover:bg-green-300">Your Profile</a></li>
@@ -44,6 +44,8 @@
   }
   }
 }
+
+
 
   const isOpen = ref(false);
   

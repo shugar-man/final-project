@@ -14,6 +14,7 @@ export default async function <T>(path: string, options: {}) {
   return await useFetch<T>(path, {
     ...options,
     baseURL: config.public.apiBaseURL,
-    headers
+    headers 
   })
+
 }

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('post_topic', function (Blueprint $table) {
+        Schema::create('post_topics', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Topic::class);
             $table->foreignIdFor(Post::class);

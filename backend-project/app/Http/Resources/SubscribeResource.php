@@ -18,8 +18,11 @@ class SubscribeResource extends JsonResource
             'id' =>$this->id,
             'user_id'=>$this->user->id,
             'user_name' => $this->user->name,
-            'subscribe_id' => $this->user->id,
+            'subscribe_id' => $this->subscribe->id,
             'subscribe_name' => $this->user->name,
+            'user_profile_image' =>$this->user->profile_image,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }
