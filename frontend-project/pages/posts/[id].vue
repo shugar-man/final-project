@@ -1,6 +1,6 @@
 <template>
 
-  <div class="text-center " style=" background-image: url(/images/bg.gif);">
+  <div class="text-center " style=" background-image: url(/images/star.gif);">
     <div v-if="post" class="text-3xl mx-1 inline-block bg-red-500 " style="width: 50%;" >
       <div class="w-auto flex " >
 
@@ -86,20 +86,13 @@
   const body = new FormData();
   const name = ref("");
 
-  const {data: likes, error} = await useMyFetch<any>(`like/post/${route.params.id}`,{});
-    if (likes.value !== null) {
-      // console.log(error)
-    } else { 
-      // console.log(error)
-
-    }
+  
     const response = await useMyFetch<any>(`likeStatus/post/${route.params.id}`,{});
     console.log(response.data.value.success);
 
 
     // console.log(likes);
     // const lengthAsNumber = parseInt(like.length, 10);
-    counter.setcounter(likes.value.length);
   
 
 
@@ -129,6 +122,13 @@ const unlike= async () => {
       alert('unlike')
     }
 }
+const {data: likes, error} = await useMyFetch<any>(`like/post/${route.params.id}`,{});
+    if (likes.value !== null) {
+      // console.log(error)
+    } else { 
+      // console.log(error)
+
+    }
   
   
   </script>

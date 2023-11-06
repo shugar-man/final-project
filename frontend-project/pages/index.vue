@@ -6,7 +6,7 @@
             <nuxt-link :to="`/tag/anime`" class="text-gray-800 hover:bg-green-300">Anime</nuxt-link>
             <nuxt-link :to="`/tag/ghost`" class="text-gray-800 hover:bg-green-300">Fanart</nuxt-link>
           </div>
-  <div class="grid md:grid-cols-4 gap-10 " style="background-image:url(../images/starnight.png); width: 100%; height: auto; object-fit: cover;">
+  <div class="grid md:grid-cols-4 gap-10 " style="background-image:url(../images/star.gif); width: 100%; height: auto; object-fit: cover;">
 
   <div v-for="post in posts.data" :key="post.id">
     <div class=" hover:bg-gray-100 hover:text-white transition duration-300 max-w-sm rounded overflow-hidden shadow-lg" style="background-color: rgb(199, 109, 109);">
