@@ -65,6 +65,7 @@ class PostController extends Controller
         $post = new Post();
         $post->name = $request->get('name');
         $post->user_id = $user->id;
+        $post->detail = $request->get('detail');
         if ($request->hasFile('image_path')) {
             $file = $request->file('image_path');
             $fileName = $file->getClientOriginalName();

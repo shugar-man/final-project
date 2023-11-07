@@ -22,7 +22,10 @@
               <button @click="deletePost(post)" class="mt-2 bg-red-500 text-white rounded px-4 py-2 hover:bg-red-700">
                 Delete
               </button>
-            
+              <!-- <button @click="deleteReport(post)" class="mt-2 bg-red-500 text-white rounded px-4 py-2 hover:bg-red-700">
+                Cancel Report
+              </button>
+             -->
             <div v-if="reportedPosts.length === 0" class="text-lg text-gray-600 mt-4">
               No reported posts
             </div>
@@ -44,23 +47,30 @@ function imageURL(path: string) {
 }
 
 const deletePost = async (post: { id: number }) => {
-  console.log('post.id:', post.id);
-  if (typeof post.id === 'number') {
-    try {
-      const response = await useMyFetch<any>(`/admin/delete-post/${post.id}`, {
-        method: 'DELETE',
-      });
-      if (typeof response.status === 'number' && response.status === 200) {
-        console.log('Success');
-      } else {
-        console.error('Failed to delete the post');
-        console.error(response.status)
+  const Uconfirm = confirm("Do you want to delete?");
+  if(Uconfirm){
+    console.log('post.id:', post.id);
+    if (typeof post.id === 'number') {
+      try {
+        const response = await useMyFetch<any>(`/admin/delete-post/${post.id}`, {
+          method: 'DELETE',
+        });
+        if (typeof response.status === 'number' && response.status === 200) {
+          console.log('Success');
+        } else {
+          console.error('Failed to delete the post');
+          console.error(response.status)
+        }
+      } catch (error) {
+        console.error('Network or request error:', error);
       }
-    } catch (error) {
-      console.error('Network or request error:', error);
+    } else {
+      console.error('Invalid post:', post);
     }
-  } else {
-    console.error('Invalid post:', post);
+    
   }
 };
+
+
+  
 </script>

@@ -19,7 +19,7 @@
         
 </template>
 <script setup lang="ts">
-const { data: users } = await useMyFetch<any>("/follow", {});
+const { data: users } = await useMyFetch<any>("/follows/following", {});
 console.log(users)
 function imageURL(path:string) {
   return import.meta.env.VITE_BACKEND_IMG_URL + '/' + path

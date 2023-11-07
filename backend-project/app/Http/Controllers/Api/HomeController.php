@@ -20,7 +20,7 @@ class HomeController extends Controller
         $posts = Post::get();
         return PostResource::collection($posts);
         // return $posts;
-        
+
     }
 
     /**

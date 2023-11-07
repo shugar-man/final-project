@@ -8,6 +8,7 @@ use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CommentController extends Controller
 {
@@ -70,6 +71,10 @@ class CommentController extends Controller
     public function comments(Request $request)
     {
         // dd($post);
+        if (auth()->user()==null) {
+            return response()->json(['message' => 'Unauthorized','success' => false,], Response::HTTP_CREATED);
+
+        }
         $id = $request->get('id');
         $post = Post::where('id',$id)->first();
         $user = $request->get('user');

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-
+            $table->string('banner')->default('blue.png');
             // $table->string("username");
             $table->boolean('role')->default(false); // false = user
             $table->string('profile_image')->default('miku.jpg')->nullable();

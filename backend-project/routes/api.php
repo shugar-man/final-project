@@ -42,6 +42,7 @@ Route::apiResource('/post',PostController::class);
 Route::apiResource('/', HomeController::class);
 Route::apiResource('/like', LikeController::class);
 Route::resource('/follow',SubscribeController::class);
+Route::get('/follows/following',[SubscribeController::class,'following']);
 Route::get('/page/{user}', [HomeController::class, 'showPage']);
 
 Route::get('/page/{user}/post', [HomeController::class, 'showPost']);
@@ -73,6 +74,9 @@ Route::get('/topic/tag/{topic}', [PostTopicController::class, 'topic']);
 Route::get('/images/{filename}', 'ImageController@getImage')->name('image.show');
 Route::get('/images/{filename}', [ImageController::class, 'getImage'])->name('image.show');
 Route::get('/admin/reported-posts', [PostReportController::class, 'getReportedPosts']);
+
+Route::post('/admin/cancel-post/{post}', [AdminController::class, 'cancelReport']);
+
 Route::delete('/admin/delete-post/{post}', [AdminController::class, 'deletePost']);
 Route::post('/admin/suspend-user/{user}', [AdminController::class, 'suspendUser']);
 Route::get('/images/{filename}', [ImageController::class, 'getImage'])->name('image.show');

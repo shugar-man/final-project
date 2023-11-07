@@ -7,6 +7,7 @@
           <p>New Name:</p>
           <input type="text" class="new-name-input" id="new_name" name="new_name" v-model="auth.user.name">
         </div>
+        <p>Profile Picture</p>
         <div class="profile-image-container">
           <img id="previewImg" class="profile-image" :src="imageURL(auth.user.profile_image)">
           <div>
@@ -19,9 +20,23 @@
             />
           </div>
         </div>
+        <p>Banner Page</p>
+        <div class="profile-image-container">
+          <img id="previewBanner" class="profile-image" :src="imageURL(auth.user.banner)">
+          <div>
+            <input
+              type="file"
+              id="banner_path"
+              name="banner_path"
+              @change="handleBannerUpload"
+              accept="image/*"
+            />
+          </div>
+        </div>
+
         <div class="profile-details">
           <p>Email: {{ auth.user.email }}</p>
-          <p>Artwork Total: {{ art_total }}</p>
+          <p v-if="!auth.isAdmin">Artwork Total: {{ art_total }}</p>
           <p>Tel: <input type="text" id="new_tel" name="new_tel" v-model="auth.user.tel"></p>
         </div>
         <form @submit.prevent="onSubmit">
@@ -42,8 +57,9 @@
   import { useAuthStore } from '~/stores/useAuthStore';
   import { Body } from 'nuxt/dist/head/runtime/components';
   const image_path = ref<File | null>(null);
+  const banner_path = ref<File | null>(null);
   const auth = useAuthStore()
-  console.log(auth.user.profile_image);
+  // console.log(auth.user.profile_image);
   
   const errorMessage = ref("")
 
@@ -67,9 +83,30 @@
   
 };
 
+const handleBannerUpload = (event: Event) => {
+  const [_banner_path] = (event.target as HTMLInputElement).files as FileList;
+
+  banner_path.value = _banner_path;
+  const fileInput2 = document.getElementById("banner_path") as HTMLInputElement;
+  const previewBanner = document.getElementById("previewBanner") as HTMLImageElement;
+  const selectedFile2 = fileInput2.files?.[0];
+
+
+  if (selectedFile2) {
+  // Create a URL for the selected file and set it as the image source
+  const imageUrl = URL.createObjectURL(selectedFile2);
+  previewBanner.src = imageUrl;
+} else {
+  // If no file is selected, clear the image source
+  previewBanner.src = imageURL(auth.user.banner);
+}
+  
+};
+
   const idUser = ref({
     id: auth.user.id
 })
+
 
   function imageURL(path:string) {
   return import.meta.env.VITE_BACKEND_IMG_URL + '/' + path
@@ -79,23 +116,29 @@
     try {
       const new_name = document.getElementById("new_name") as HTMLInputElement;
       const new_tel = document.getElementById('new_tel') as HTMLInputElement;
-      console.log(new_name.value);
+      console.log(new_name);
+      console.log(new_tel);
+      
       
       const body = new FormData();
       body.append('image_path', image_path.value);
-      body.append('name',new_name.value)
-      body.append('tel',new_tel.value)  
+      body.append('new_name',new_name.value)
+      body.append('new_tel',new_tel.value)  
       body.append('id',auth.user.id)
-      console.log(body);
+      body.append('banner_path',banner_path.value)
+      // console.log(body);
+      // console.log(auth.user.id);
+      
       
       const { data: response, error } = await useMyFetch<any>("/profile/edit", {
       method: "POST",
-      body
+      body,
     });
     if (response.value !== null) {
       errorMessage.value = ""
       console.log(response.value);
-      auth.setProfileImage(response.value);
+      auth.setProfileImage(response.value.profile_image);
+      auth.setProfileBanner(response.value.banner);
       alert('Update Profile')
       await navigateTo('/profile')
     } else { 
@@ -172,9 +215,9 @@ profile-image input[type="file"] {
 }
 
 .profile-details {
-  color: #555;
-  font-size: 0.875rem;
-  text-align: center;
+  color: black;
+  font-size: 1.2rem;
+  text-align: left;
   margin-top: 0.5rem;
 }
 

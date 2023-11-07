@@ -28,14 +28,29 @@ class SubscribeController extends Controller
         if ($subscribes == null) {
             return 12;
         }
-       
+
         $users = User::whereIn('id', $subscribes->pluck('subscribe_id'))->get();
         // return $subscribes;
-        
+
         return UserResource::collection($users);
-        
 
 
+
+    }
+    public function following() {
+        $user = auth()->user();
+
+        if ($user == null) {
+            return 1234;
+        }
+        $subscribes = Subscribe::where('subscribe_id',$user->id)->get();
+        if ($subscribes == null) {
+            return 12;
+        }
+        $users = User::whereIn('id', $subscribes->pluck('user_id'))->get();
+        // return $subscribes;
+
+        return UserResource::collection($users);
     }
 
     /**
@@ -104,10 +119,10 @@ class SubscribeController extends Controller
                 'comment_id' => $user2->id
             ], Response::HTTP_CREATED);
         }
-        
+
     }
     public function sub(Request $request,$user2) {
-        
+
         $user = auth()->user();
         if (auth()->user()==null) {
             // return response()->json([
@@ -126,14 +141,14 @@ class SubscribeController extends Controller
                     'success' => true,
                 ], Response::HTTP_CREATED);
             }
-            
-            
-                
+
+
+
         }
         return response()->json([
             'success' => false,
         ], Response::HTTP_CREATED);
-        // return $subscribe;    
+        // return $subscribe;
     }
     public function unfollow(Request $request,$user2){
         $user = auth()->user();
@@ -160,10 +175,10 @@ class SubscribeController extends Controller
 
         // $like = Like::Where('user_id',1)->get();
         return $subscribe;
-        
 
-        
+
+
     }
-    
+
 
 }

@@ -15,7 +15,7 @@
 <div
     >
     <div class="rounded-t-lg h-100 overflow-hidden">
-        <img class="object-cover object-top w-full h-full" style="height: 300px;" :src=imageURL(user.profile_image)>
+        <img class="object-cover object-top w-full" style="object-fit: inherit;height: 300px;" :src=imageURL(user.banner)>
     </div>
     <div class="mx-auto w-32 h-32 relative -mt-16 border-4 border-white rounded-full overflow-hidden">
         <img :src=imageURL(user.profile_image)>
@@ -58,9 +58,7 @@
 
         
     </div>
-    <button @click="suspendUser" class="bg-red-500 text-white rounded px-4 py-2 hover:bg-red-700">
-        Suspend
-    </button>
+    
     
 </div>
   
@@ -125,7 +123,7 @@ const onSubmit= async () => {
     }
     else { 
       alert('follow')
-
+      window.location.reload()
     }
 }
 const unSub= async () => {
@@ -136,7 +134,7 @@ const unSub= async () => {
     }
     else { 
       alert('unfollow')
-
+      window.location.reload()
     }
 }
 

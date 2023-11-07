@@ -4,7 +4,7 @@
             <nuxt-link :to="`/tag/painting`" class="text-gray-800 hover:bg-green-300">Painting</nuxt-link>
             <nuxt-link :to="`/tag/aipaint`" class="text-gray-800 hover:bg-green-300">Ai Painting</nuxt-link>
             <nuxt-link :to="`/tag/anime`" class="text-gray-800 hover:bg-green-300">Anime</nuxt-link>
-            <nuxt-link :to="`/tag/ghost`" class="text-gray-800 hover:bg-green-300">Fanart</nuxt-link>
+            <nuxt-link :to="`/tag/fanart`" class="text-gray-800 hover:bg-green-300">Fanart</nuxt-link>
           </div>
   <div class="grid md:grid-cols-4 gap-10 " style="background-image:url(../images/star.gif); width: 100%; height: auto; object-fit: cover;">
 

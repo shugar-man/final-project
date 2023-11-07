@@ -54,26 +54,42 @@ class ProfileController extends Controller
      */
     public function update(Request $request)
     {
-        $id = $request->get('id');
-        $user = User::find($id)->first();
+        // $id = $request->get('id');
+        // $user = User::find($id)->first();
+        $user = auth()->user();
         $request->validate([
-            'name'=>['required','min:3','max:255'],
-            'tel'=>['integer','nullable']
+            'new_name'=>['required','min:3','max:255'],
+            'new_tel'=>['numeric','nullable']
         ]);
         $fileName = null;
+        $fileNameImage = null;
+        $fileNameBanner = null;
         if ($request->hasFile('image_path')) {
             $file = $request->file('image_path');
-            $fileName = $file->getClientOriginalName();
-            $path = 'public/images/' . $fileName;
+            $fileNameImage = $file->getClientOriginalName();
+            $path = 'public/images/' . $fileNameImage;
             Storage::disk('local')->put($path,file_get_contents($file));
-            $user->profile_image = $fileName;
+            $user->profile_image = $fileNameImage;
+        }
+        if ($request->hasFile('banner_path')) {
+            $file = $request->file('banner_path');
+            $fileNameBanner = $file->getClientOriginalName();
+            $path = 'public/images/' . $fileNameBanner;
+            Storage::disk('local')->put($path,file_get_contents($file));
+            $user->banner = $fileNameBanner;
         }
         $new_name = $request->get('new_name');
+        if($new_name !== null){
+            $user->name = $new_name;
+        }
+        $new_tel = $request->get('new_tel');
+        if($new_tel !== null){
+            $user->tel = $new_tel;
+        }
         // $user->name = $new_name;
         $user->save();
-        if($fileName !== null){
-            return $fileName;
-        }
+
+        return $user;
     }
 
     /**

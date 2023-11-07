@@ -13,7 +13,7 @@
        style="writing-mode: horizontal-tb !important;padding-block: 1px; padding-inline: 2px;">
        <form @submit.prevent="onSubmit()">
         <button type="submit" class ="w-full rounded-full bg-red-900 hover:shadow-lg font-semibold text-white px-6 py-2">
-          searh
+          search
         </button>
       </form>
 
@@ -21,9 +21,9 @@
   
        
       <ul class="md:flex md:items-center">
-        <MenuLink to="/">Home</MenuLink>
+        <a href="/" class="text-xl px-2 py-2 mx-2 my-2 bg-green-400 text-gray-800 rounded-md hover:bg-green-300">Home</a>
         <!-- <MenuLink to="/shop">Shop</MenuLink> -->
-        <MenuLink to="/posts/create" v-if="auth.isLogin">Post</MenuLink>
+        <MenuLink to="/posts/create" v-if="auth.isLogin && !auth.isAdmin">Post</MenuLink>
         <MenuLink to="/admin" v-if="auth.isAdmin">Admin</MenuLink> <!-- v-if="auth.isAdmin" -->
         <DropDownProfile></DropDownProfile>
         

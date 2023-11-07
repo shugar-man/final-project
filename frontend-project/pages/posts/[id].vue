@@ -55,17 +55,18 @@
         </form>
         <li class="bg-gray-200" v-for="(comment) in comments.data" :key="comment.id">
           <div class="comment-container">
-            <img :src="imageURL(comment.profile_image)" class="rounded-full h-12 w-12 mb-4" style=""><div class="comment-details">{{ comment.user_name }} :</div>
+            <nuxt-link :to="`/page/${post.data.user_id}` " ><img :src="imageURL(comment.profile_image)" class="rounded-full h-12 w-12 mb-4" style=""></nuxt-link>
+            <div class="comment-details">{{ comment.user_name }} :</div>
             <textarea readonly v-model="comment.text"></textarea>
           </div>
         </li>
     </div>
     
       
-      <div class="pagination">
+      <div class="pagination" style="color: #ff0000;">
         <button class="pagination-button" @click="prevPage" :disabled="comments.meta.current_page === 1">Previous</button>
         <button class="pagination-button" @click="nextPage" :disabled="comments.meta.current_page === comments.meta.last_page">Next</button>
-        Page: {{ comments.meta.current_page }} / {{ Math.ceil(comments.meta.total / comments.meta.per_page) === 0 ? 1 :  Math.ceil(comments.meta.total / comments.meta.per_page)}}
+        Comment Page: {{ comments.meta.current_page }} / {{ Math.ceil(comments.meta.total / comments.meta.per_page) === 0 ? 1 :  Math.ceil(comments.meta.total / comments.meta.per_page)}}
       </div>
 
     <form @submit.prevent="onComment()">
@@ -132,6 +133,7 @@
     }
     else {
       alert('like complete')
+      window.location.reload()
     }
 }
 const unlike= async () => {
@@ -142,6 +144,7 @@ const unlike= async () => {
     }
     else {
       alert('unlike')
+      window.location.reload()
     }
 }
 const {data: likes, error} = await useMyFetch<any>(`like/post/${route.params.id}`,{});
@@ -155,14 +158,24 @@ const {data: likes, error} = await useMyFetch<any>(`like/post/${route.params.id}
 const onReport= async () => {
     const route = useRoute()
     body.append('post_id', route.params.id.toString());
-    const {data: response, error} = await useMyFetch<any>(`reportPost/post/${route.params.id}`,{
+    const {data: responses, error} = await useMyFetch<any>(`reportPost/post/${route.params.id}`,{
       method: "POST",
       body
     });
-    if (response.value !== null) {
-      console.log(response.value);
-    } else {
-      console.log(error);
+    // if (responses.value !== null) {
+    //   console.log(responses.value);
+    //   alert("success report")
+    // } else {
+    //   console.log(error);
+    // }
+    if(responses.value.message === 'Post reported successfully'){
+      alert('success report')
+    }
+    if(responses.value.message === "Another user has already reported this post."){
+      alert('Another user has already reported this post.')
+    }
+    if(responses.value.message === "You have already reported this post."){
+      alert("You have already reported this post.")
     }
 }
 
@@ -227,12 +240,16 @@ const onComment = async () => {
       method: "POST",
       body: formData
     });
-    if (response.value !== null) {
+    if (response.value.message=="Unauthorized") {
+      await navigateTo('/login')
+    }else{
+      if (response.value !== null) {
       alert('Commentted')
       window.location.reload();
     } else { 
       console.log(error)
       alert("please input comment")
+    }
     }
     console.log(response.value);
   

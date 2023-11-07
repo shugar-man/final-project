@@ -15,7 +15,8 @@
   <ul>
     <!-- <li><a href="#" class="text-gray-800 hover:bg-green-300">Topic</a></li>
     <li><a href="#" class="text-gray-800 hover:bg-green-300">Challenge</a></li> -->
-    <li><nuxt-link :to="'/follows'" v-if="auth.token" class="text-gray-800 hover:bg-green-300">Following</nuxt-link></li>
+    <li><nuxt-link :to="'/follows'" v-if="auth.token" class="text-gray-800 hover:bg-green-300">Follower</nuxt-link></li>
+    <li><nuxt-link :to="'/follows/user'" v-if="auth.token" class="text-gray-800 hover:bg-green-300">Following</nuxt-link></li>
   </ul>
 </div>
     </div>

@@ -1,19 +1,22 @@
 <template>
   <div class="flex items-center justify-center">
     <div class="profile-container">
+      <div class="banner">
+    <img class="banner-image" :src="imageURL(auth.user.banner)" alt="Banner Image">
+      </div>
       <div class="profile-content">
         <img :src=imageURL(auth.user.profile_image) class="profile-image" alt="Profile Picture">
         <h1 class="profile-name">{{ auth.user.name }}</h1>
         <div class="profile-details">
           <p>Email: {{ auth.user.email }}</p>
-          <p>Artwork Total: {{ art_total }}</p>
+          <p v-if="!auth.isAdmin">Artwork Total: {{ art_total }}</p>
           <p>Tel: {{ auth.user.tel }}</p>
         </div>
         <nuxt-link to="/profile/edit">
           <button class="edit-button">Edit Profile</button>
         </nuxt-link>
         <nuxt-link :to="`/page/${auth.user.id}`">
-          <button class="view-button">View My Posts</button>
+          <button class="view-button">My Page</button>
         </nuxt-link>
       </div>
     </div>
@@ -27,7 +30,7 @@
   const idUser = ref({
     id: auth.user.id
 })
-console.log(auth.user.profile_image);
+// console.log(auth.user.profile_image);
 
   function imageURL(path:string) {
   return import.meta.env.VITE_BACKEND_IMG_URL + '/' + path
@@ -38,8 +41,8 @@ console.log(auth.user.profile_image);
     body : idUser
   })
   const art_total = response.value;
-  console.log(art_total);
-  console.log(idUser.value.id);
+  // console.log(art_total);
+  // console.log(idUser.value.id);
   
   
   
@@ -75,9 +78,9 @@ console.log(auth.user.profile_image);
 }
 
 .profile-details {
-  color: #888;
-  font-size: 0.875rem;
-  text-align: center;
+  color: black;
+  font-size: 1.2rem;
+  text-align: left;
   margin-top: 0.5rem;
 }
 
@@ -98,4 +101,21 @@ console.log(auth.user.profile_image);
 .view-button:hover {
   background-color: #2779bd;
 }
+
+.banner {
+    position: relative;
+    width: 100%;
+    height: 200px; /* Set the desired height for your banner */
+    overflow: hidden;
+}
+
+.banner-image {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover; /* You can use 'cover' or 'contain' depending on your preference */
+}
+
 </style>

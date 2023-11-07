@@ -10,6 +10,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Response;
 
 
 
@@ -26,14 +27,13 @@ class AuthController extends Controller
     }
 
     public function login(Request $request) {
-        
+
         $request ->validate([
             'email' =>['required','email'],
             'password' =>['required']
         ]);
         $credentials = $request->only(['email','password']);
         if (!$token = JWTAuth::attempt($credentials)) {
-
             return response()->json(['error'=>'Unauthorized'],401);
         }
         return $this->respondWithToken($token);
@@ -44,14 +44,14 @@ class AuthController extends Controller
     //         'email' => ['required', 'email'],
     //         'password' => ['required'],
     //     ]);
-    
+
     //     try {
     //         $credentials = $request->only(['email', 'password']);
-    
+
     //         if (!$token = JWTAuth::attempt($credentials)) {
     //             return response()->json(['error' => 'Unauthorized'], 401);
     //         }
-    
+
     //         $user = JWTAuth::toUser($token);
     //         dd($user->status);
 
@@ -87,11 +87,11 @@ class AuthController extends Controller
     // public function me()
     // {
     //     $user = JWTAuth::user();
-    
+
     //     if (!$user) {
     //         return response()->json(['error' => 'User not found'], 404);
     //     }
-    
+
     //     if ($user->status) {
     //         return response()->json($user);
     //     } else {
@@ -117,18 +117,20 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required|min:5|string|max:255',
+            'name' => 'required|min:5|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
-            // 'password' => 'required|string|min:8|confirmed',
-            'tel' => 'required|string|digits:10', 
-            // 'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
+            // 'email' => 'required|string|email|max:255',
+            //'password' => 'required|string|min:8|',
+            'password' => 'required|string|min:8|confirmed',
+            'tel' => 'nullable|string|digits|max:10',
+            // 'tel' => 'required|nullable|string|digits:10',
+            // 'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
         $user = new User();
         $user->name = $request->get('name');
         $user->email = $request->get('email');
         $user->tel = $request->get('tel');
-        $user->profile_image = $request->file('profile_image');
+        // $user->profile_image = $request->file('profile_image');
         $user->password = bcrypt($request->get('password'));
         // if ($request->hasFile('profile_image')) {
         //     $imagePath = $request->file('profile_image')->store('profile_images', 'public');

@@ -7,7 +7,7 @@
       <form @submit.prevent="onSubmit">
         <div>
           <label class="block mb-2 text-red-500" for="email">Email</label>
-          <input type="email" v-model="formData.email" id="email" placeholder="email@example.com" class="w-full p-2 mb-6 text-red-700 border-b-2 border-red-500 outline-none focus:bg-gray-300 " />
+          <input type="email" v-model="formData.email" id="email" placeholder="" class="w-full p-2 mb-6 text-red-700 border-b-2 border-red-500 outline-none focus:bg-gray-300 " />
           <p v-if="email_error !== null" class="pb-4 text-red-600">{{ email_error }}</p>
         </div>
         <div>
@@ -85,6 +85,22 @@ const clearPasswordError = () => {
 async function onSubmit() {
   clearEmailError();
   clearPasswordError();
+
+  if(formData.password === ''){
+    
+    password_error.value = "The password field is required.";
+  }
+  
+  if (formData.email === ''){
+    email_error.value = 'The email field is required.';
+  }
+  
+  if(password_error.value !== null){
+    return ;
+  }else if(email_error.value !== null){
+    return ;
+  }
+
   const { data: response, error } = await useMyFetch<any>('auth/login', {
     method: 'POST',
     body: formData
@@ -107,10 +123,12 @@ async function onSubmit() {
     const { data: user, error } = await useMyFetch<any>('auth/me', {
       method: 'POST'
     })
+
+    
     if (user.value !== null) {
-      const { id,name, email , profile_image,role,tel} = user.value
+      const { id,name, email , profile_image,role,tel,banner} = user.value
       console.log(name)
-      auth.setUser(id,name, email, profile_image,role, tel)
+      auth.setUser(id,name, email, profile_image,role, tel, banner)
       alert(`Welcome ${name}`)
       await navigateTo('/profile')
     }
@@ -118,5 +136,9 @@ async function onSubmit() {
     
 
   }
+  else{
+      alert("Wrong password or This email not register")
+      window.location.reload()
+    }
 }
 </script>

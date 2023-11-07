@@ -20,6 +20,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'role' => $this->role,
             'profile_image' =>$this->profile_image,
+            'banner' => $this->banner
 //            'image' => $this->whenLoaded('image'),
         ];
     }

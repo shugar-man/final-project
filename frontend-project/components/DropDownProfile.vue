@@ -12,7 +12,9 @@
         class="text-xl absolute right-0 mt-2 w-48 bg-green-400 border rounded-lg shadow-lg" style="z-index: 999;"
       >
         <ul>
-            <li><a href="/profile" v-if="auth.isLogin" class="text-gray-800 hover:bg-green-300">Your Profile</a></li>
+          <nuxt-link :to="`/page/${auth.user.id}`"  v-if="auth.isLogin" class="text-gray-800 hover:bg-green-300">Your Page</nuxt-link>
+            <!-- <li><a href="/page/{auth.id}" v-if="auth.isLogin" class="text-gray-800 hover:bg-green-300">Your Profile</a></li> -->
+            <li><a href="/profile" v-if="auth.isLogin" class="text-gray-800 hover:bg-green-300">Profile</a></li>
             <li><a href="/login" v-if="!auth.isLogin" class="text-gray-800 hover:bg-green-300">Sign In</a></li>
             <li><a href="/" @click="logout" v-if="auth.isLogin" class="text-gray-800 hover:bg-green-300">Sign Out</a></li>
         </ul>
@@ -29,6 +31,7 @@
     if(path === ""){
       return "images/users/picture.png"
     }
+    console.log(path);
     
   return import.meta.env.VITE_BACKEND_IMG_URL + '/' + path
   };

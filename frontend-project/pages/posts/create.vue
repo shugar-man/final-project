@@ -91,10 +91,11 @@
   
   <style>
   .resized-image {
-    width: 400px;
-    height: 300px;
-    object-fit: contain;
-  }
+  display: block;
+  margin: 0 auto; /* Center horizontally */
+  max-width: 100%; /* Ensure the image does not exceed the container width */
+  max-height: 100%; /* Ensure the image does not exceed the container height */
+}
   .centered-block {
     position: relative;
     top: 45%;
